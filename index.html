@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZAMEER HAIDER CHATTHA - Portfolio</title>
+<title>Zameer Haider Chattha - Portfolio</title>
 
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
@@ -11,306 +11,276 @@
 <!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com"></script>
 
-<!-- AOS for scroll animations -->
+<!-- AOS -->
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
 <style>
-body { font-family: 'Inter', sans-serif; margin:0; padding:0; overflow-x:hidden; scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; margin:0; padding:0; overflow-x:hidden; }
 
-/* ================= TOP NAVIGATION ================= */
-nav { position:fixed; top:0; width:100%; z-index:50; background:rgba(15,15,15,0.85); backdrop-filter:blur(6px); }
-nav ul { display:flex; justify-center; gap:2rem; padding:1rem; list-style:none; margin:0; }
-nav ul li a { color:#FFD700; font-weight:600; text-transform:uppercase; transition:0.3s; }
-nav ul li a:hover { color:#fff; }
-
-/* ================= SPLASH ANIMATION ================= */
-#splash {
-  position:fixed; inset:0;
-  display:flex; flex-direction:column; justify-content:center; align-items:center;
-  background:#0f0f0f; color:#FFD700; z-index:9999;
-  font-weight:900; text-transform:uppercase; font-size:4rem; text-align:center;
+/* Splash animation */
+.wave-text span {
+  display: inline-block;
+  animation: splashWave 2.5s infinite;
 }
-#splash span { display:inline-block; animation: wave 4s ease-in-out infinite; }
-@keyframes wave {
-  0%,100% { transform: translateY(0px);}
-  25% { transform: translateY(-10px);}
-  50% { transform: translateY(5px);}
-  75% { transform: translateY(-5px);}
-}
-#splash::after {
-  content:"";
-  position:absolute; top:0; left:-100%; width:100%; height:100%;
-  background: linear-gradient(120deg, rgba(255,255,255,0.0), rgba(255,255,255,0.4), rgba(255,255,255,0.0));
-  animation: shimmer 3s infinite;
-}
-@keyframes shimmer { 0%{ left:-100%; }100%{ left:100%; } }
-#splash-sub { color:#F5F5DC; font-weight:600; font-size:1.5rem; margin-top:1rem; opacity:0; animation:fadeInSub 2s forwards; animation-delay:0.8s;}
-@keyframes fadeInSub { 0%{opacity:0;}100%{opacity:1;} }
-
-/* ================= HERO SECTION ================= */
-.hero {
-  position:relative; height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;
-  background:#0f0f0f; overflow:hidden; opacity:0; transition:opacity 1s ease;
-}
-.hero.active { opacity:1; }
-.hero::before {
-  content:""; position:absolute; inset:0;
-  background:url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
-  filter: brightness(0.3); z-index:0;
+.wave-text span:nth-child(odd) { animation-delay: 0.1s; }
+.wave-text span:nth-child(even) { animation-delay: 0.3s; }
+@keyframes splashWave {
+  0%,100% { transform: translateY(0); color: #FFD700; }
+  50% { transform: translateY(-12px); color: #FF69B4; }
 }
 
-/* Particles Canvas */
-#hero-canvas { position:absolute; inset:0; z-index:1; }
+/* Hero heading wave animation */
+.hero-wave span {
+  display:inline-block;
+  transform-origin:bottom center;
+  animation: heroWave 3s ease-in-out infinite;
+}
+.hero-wave span:nth-child(odd) { animation-delay: 0s; }
+.hero-wave span:nth-child(even) { animation-delay: 0.05s; }
+@keyframes heroWave {
+  0%,100% { transform: translateY(0); color: #FFD700; }
+  50% { transform: translateY(-8px); color: #4ADE80; }
+}
 
-/* Hero Name */
-.hero-heading { font-size:4rem; font-weight:900; color:#FFD700; text-transform:uppercase; z-index:2; position:relative; }
-
-/* Subheading Floating */
-.hero-subheading { font-size:1.8rem; color:#F5F5DC; opacity:1; animation: floatText 4s ease-in-out infinite; margin-top:1rem; z-index:2; position:relative; }
-@keyframes floatText { 0%,100%{ transform: translateY(0);}50%{ transform: translateY(-8px);} }
-
-/* Buttons */
-.hero-buttons a { transition: all 0.3s ease; }
-.hero-buttons a:hover { transform: scale(1.05); box-shadow:0 10px 30px rgba(255,215,0,0.5); }
-
-/* Cards Hover Effect */
+/* Card hover */
 .card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-.card:hover { transform: translateY(-6px); box-shadow:0 12px 30px rgba(0,0,0,0.15); }
+.card:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(0,0,0,0.15); }
 
-/* Gradient Animated Section Headings */
+/* Hero background & overlay */
+#hero { position: relative; min-height: 100vh; display:flex; align-items:center; justify-content:center; text-align:center; overflow:hidden; padding:0 1rem; }
+#hero-background { position:absolute; inset:0; background-image: url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'); background-size:cover; background-position:center; z-index:0; }
+#hero-overlay { position:absolute; inset:0; background-color:rgba(0,0,0,0.5); z-index:1; }
+
+/* Particle canvas */
+#hero-canvas { position:absolute; inset:0; z-index:2; pointer-events:none; }
+
+/* Gradient animate for section headings */
 .animate-gradient {
-  background: linear-gradient(270deg, #FFD700, #6b5bff, #ff4f91, #4fd1ff);
-  background-size: 800% 800%;
+  background: linear-gradient(270deg,#FFD700,#FF69B4,#4ADE80,#3B82F6,#F472B6,#FFD700);
+  background-size: 1200% 1200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradientShift 8s ease infinite;
+  animation: gradientShift 12s ease infinite;
 }
-@keyframes gradientShift { 0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;} }
+@keyframes gradientShift {
+  0% { background-position:0% 50%; }
+  50% { background-position:100% 50%; }
+  100% { background-position:0% 50%; }
+}
 </style>
 </head>
 <body class="bg-white text-gray-900">
 
-<!-- ================= NAVIGATION ================= -->
-<nav>
-  <ul>
-    <li><a href="#hero">Home</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#education">Education</a></li>
-    <li><a href="#certifications">Certifications</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#achievements">Achievements</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
+<!-- SPLASH -->
+<div id="splash" class="fixed inset-0 bg-gray-900 flex flex-col items-center justify-center z-50 px-4 text-center">
+  <h1 class="wave-text text-5xl sm:text-6xl md:text-7xl font-extrabold leading-snug break-words">
+    <span>Z</span><span>A</span><span>M</span><span>E</span><span>E</span><span>R</span><br class="sm:hidden">
+    <span>H</span><span>A</span><span>I</span><span>D</span><span>E</span><span>R</span>
+  </h1>
+  <p class="mt-4 text-base sm:text-lg md:text-xl text-gray-300">A Chartered Accountant</p>
+</div>
+
+<!-- HERO -->
+<section id="hero" class="opacity-0 transition-opacity duration-1000">
+  <div id="hero-background"></div>
+  <div id="hero-overlay"></div>
+  <canvas id="hero-canvas"></canvas>
+  <div class="relative z-10 max-w-4xl mx-auto text-center px-4">
+    <h1 class="hero-wave text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold mb-4 leading-snug break-words">
+      <span>Z</span><span>A</span><span>M</span><span>E</span><span>E</span><span>R</span> <br>
+      <span>H</span><span>A</span><span>I</span><span>D</span><span>E</span><span>R</span> <span>C</span><span>H</span><span>A</span><span>T</span><span>T</span><span>H</span><span>A</span>
+    </h1>
+    <p class="text-base sm:text-lg md:text-xl text-gray-200 mb-6 leading-relaxed">
+      A student of Chartered Accountancy at <span class="font-semibold">Institute of Chartered Accountants of Pakistan</span>
+    </p>
+    <div class="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">
+      <a href="mailto:zameerchattha0@gmail.com" class="px-6 py-3 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700 transition text-center">📧 Email Me</a>
+      <a href="https://www.linkedin.com/in/zameerhaiderchattha" target="_blank" class="px-6 py-3 bg-white text-gray-900 rounded-lg shadow hover:bg-gray-100 transition text-center">🔗 LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<!-- NAVIGATION -->
+<nav class="sticky top-0 bg-white shadow z-40">
+  <div class="max-w-6xl mx-auto px-6 py-3 flex flex-wrap justify-center gap-4 text-sm sm:text-base">
+    <a href="#hero" class="text-gray-800 hover:text-indigo-600">Home</a>
+    <a href="#objective" class="text-gray-800 hover:text-indigo-600">Objective</a>
+    <a href="#experience" class="text-gray-800 hover:text-indigo-600">Experience</a>
+    <a href="#education" class="text-gray-800 hover:text-indigo-600">Education</a>
+    <a href="#certifications" class="text-gray-800 hover:text-indigo-600">Certifications</a>
+    <a href="#skills" class="text-gray-800 hover:text-indigo-600">Skills</a>
+    <a href="#achievements" class="text-gray-800 hover:text-indigo-600">Achievements</a>
+    <a href="#contact" class="text-gray-800 hover:text-indigo-600">Contact</a>
+  </div>
 </nav>
 
-<!-- ================= SPLASH INTRO ================= -->
-<div id="splash">
-  <div>
-    <span>Z</span><span>A</span><span>M</span><span>E</span><span>E</span><span>R</span>
-    <span> </span>
-    <span>H</span><span>A</span><span>I</span><span>D</span><span>E</span><span>R</span>
-  </div>
-  <div id="splash-sub">A Chartered Accountant</div>
-</div>
+<!-- OBJECTIVE -->
+<section id="objective" class="max-w-6xl mx-auto px-6 py-16 text-center" data-aos="fade-up">
+  <h2 class="text-3xl sm:text-4xl font-bold mb-8 uppercase animate-gradient">Objective</h2>
+  <p class="text-gray-700 text-lg sm:text-xl leading-relaxed max-w-3xl mx-auto">
+    Dedicated Chartered Accountancy student at <span class="font-semibold">ICAP</span> aspiring to build a strong career with professional competence and integrity. Strong interest in <span class="font-semibold">External Audit</span> as first preference, while also eager to contribute in <span class="font-semibold">Internal Audit, Accounts and Finance, Taxation, ERP,</span> or <span class="font-semibold">Advisory</span> roles. Bringing analytical ability, attention to detail, and adaptability to align with dynamic organizational needs.
+  </p>
+</section>
 
-<!-- ================= HERO SECTION ================= -->
-<section class="hero" id="hero">
-  <canvas id="hero-canvas"></canvas>
-  <h1 class="hero-heading">ZAMEER HAIDER CHATTHA</h1>
-  <p class="hero-subheading">A student of Chartered Accountancy at Institute of Chartered Accountants of Pakistan</p>
-  <div class="hero-buttons mt-8 flex flex-col sm:flex-row gap-6 z-20 relative">
-    <a href="mailto:zameerchattha0@gmail.com" class="px-6 py-3 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700 transition">📧 Email Me</a>
-    <a href="https://www.linkedin.com/in/zameerhaiderchattha" target="_blank" class="px-6 py-3 bg-white text-gray-900 rounded-lg shadow hover:bg-gray-100 transition">🔗 LinkedIn</a>
+<!-- EXPERIENCE -->
+<section id="experience" class="bg-gray-50 py-16">
+  <div class="max-w-6xl mx-auto px-6">
+    <h2 class="text-3xl sm:text-4xl font-bold mb-12 text-center animate-gradient" data-aos="fade-up">Experience</h2>
+    <div class="grid md:grid-cols-2 gap-8">
+      <div class="card p-6 bg-white rounded-xl" data-aos="fade-up">
+        <h3 class="text-xl font-semibold">Haris & Co. Engineering Concern Pvt. Ltd.</h3>
+        <p class="text-gray-600">Accounts & Finance Intern | June 2025 – Present | Lahore</p>
+        <ul class="mt-3 text-gray-700 text-sm list-disc pl-5">
+          <li>Assigned to the Invoicing Department, ensuring accuracy and compliance.</li>
+          <li>Applied theoretical accounting & finance knowledge to real-world processes.</li>
+        </ul>
+      </div>
+      <div class="card p-6 bg-white rounded-xl" data-aos="fade-up" data-aos-delay="200">
+        <h3 class="text-xl font-semibold">Arkhitech</h3>
+        <p class="text-gray-600">Finance Intern | May 2025 – June 2025 | Lahore</p>
+        <ul class="mt-3 text-gray-700 text-sm list-disc pl-5">
+          <li>Assisted with financial operations at a software house.</li>
+          <li>Gained exposure to finance functions in a fast-paced environment.</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- ================= OBJECTIVE ================= -->
-<section id="objective" class="max-w-6xl mx-auto px-6 py-20 text-center">
-<h2 class="text-4xl font-bold mb-8 uppercase animate-gradient" data-aos="fade-up">Objective</h2>
-<p class="text-gray-700 max-w-3xl mx-auto text-lg leading-relaxed" data-aos="fade-up" data-aos-delay="200">
-Dedicated Chartered Accountancy student at <span class="font-semibold">ICAP</span> aspiring to build a strong career with professional competence and integrity. 
-Strong interest in <span class="font-semibold">External Audit</span> as first preference, while also eager to contribute in 
-<span class="font-semibold">Internal Audit, Accounts and Finance, Taxation, ERP,</span> or <span class="font-semibold">Advisory</span> roles. 
-Bringing analytical ability, attention to detail, and adaptability to align with dynamic organizational needs.
-</p>
+<!-- EDUCATION -->
+<section id="education" class="max-w-6xl mx-auto px-6 py-16">
+  <h2 class="text-3xl sm:text-4xl font-bold mb-12 text-center animate-gradient" data-aos="fade-up">Education & Professional Qualification</h2>
+  <div class="grid md:grid-cols-2 gap-8">
+    <div class="card p-6 bg-gray-50 rounded-xl" data-aos="fade-up">
+      <h3 class="text-xl font-semibold">ICAP</h3>
+      <p class="text-gray-600">CAF – 7/8 passed, 1 awaiting result (2023–2025)</p>
+    </div>
+    <div class="card p-6 bg-gray-50 rounded-xl" data-aos="fade-up" data-aos-delay="200">
+      <h3 class="text-xl font-semibold">ICAP</h3>
+      <p class="text-gray-600">PRC + AFC Completed (2021–2022)</p>
+    </div>
+    <div class="card p-6 bg-gray-50 rounded-xl" data-aos="fade-up" data-aos-delay="400">
+      <h3 class="text-xl font-semibold">Cause-Way College Hafizabad</h3>
+      <p class="text-gray-600">F.Sc. Pre-Engineering | 82% (2018–2020)</p>
+    </div>
+    <div class="card p-6 bg-gray-50 rounded-xl" data-aos="fade-up" data-aos-delay="600">
+      <h3 class="text-xl font-semibold">Govt. High School No.1 Hafizabad</h3>
+      <p class="text-gray-600">Matric Science | 92.6% (2016–2018)</p>
+    </div>
+  </div>
 </section>
 
-<!-- ================= EXPERIENCE ================= -->
-<section id="experience" class="bg-gray-50 py-20">
-<div class="max-w-6xl mx-auto px-6">
-<h2 class="text-4xl font-bold mb-12 text-center uppercase animate-gradient" data-aos="fade-up">Experience</h2>
-<div class="grid md:grid-cols-2 gap-8">
-  <div class="card p-6 bg-white rounded-xl" data-aos="fade-up">
-    <h3 class="text-xl font-semibold">Haris & Co. Engineering Concern Pvt. Ltd.</h3>
-    <p class="text-gray-600">Accounts & Finance Intern | June 2025 – Present | Lahore</p>
-    <ul class="mt-3 text-gray-700 text-sm list-disc pl-5">
-      <li>Assigned to the Invoicing Department, ensuring accuracy and compliance.</li>
-      <li>Applied theoretical accounting & finance knowledge to real-world processes.</li>
+<!-- CERTIFICATIONS -->
+<section id="certifications" class="bg-gray-50 py-16">
+  <div class="max-w-6xl mx-auto px-6">
+    <h2 class="text-3xl sm:text-4xl font-bold mb-12 text-center animate-gradient" data-aos="fade-up">Certifications</h2>
+    <div class="grid md:grid-cols-2 gap-8">
+      <div class="card p-6 bg-white rounded-xl" data-aos="fade-up">MS Office Certified – Rise Premier School of Accountancy</div>
+      <div class="card p-6 bg-white rounded-xl" data-aos="fade-up" data-aos-delay="200">PPE Certified – Rise Premier School of Accountancy</div>
+      <div class="card p-6 bg-white rounded-xl" data-aos="fade-up" data-aos-delay="400">Advanced Excel for Job & Real World – Udemy</div>
+      <div class="card p-6 bg-white rounded-xl" data-aos="fade-up" data-aos-delay="600">Data Science & Machine Learning (Intro) – Udemy</div>
+      <div class="card p-6 bg-white rounded-xl" data-aos="fade-up" data-aos-delay="800">Finance & Investment Mastery – Udemy</div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="max-w-6xl mx-auto px-6 py-16">
+  <h2 class="text-3xl sm:text-4xl font-bold mb-12 text-center animate-gradient" data-aos="fade-up">Skills</h2>
+  <div class="grid md:grid-cols-2 gap-8">
+    <div class="card p-6 bg-gray-50 rounded-xl" data-aos="fade-up">
+      <h3 class="text-lg font-semibold mb-2">Technical Skills</h3>
+      <ul class="text-gray-700 list-disc pl-5 space-y-1 text-sm">
+        <li>Accounting Standards, Financial Reporting</li>
+        <li>Audit, Taxation, ERP Systems</li>
+        <li>MS Office, Advanced Excel</li>
+      </ul>
+    </div>
+    <div class="card p-6 bg-gray-50 rounded-xl" data-aos="fade-up" data-aos-delay="200">
+      <h3 class="text-lg font-semibold mb-2">Soft Skills</h3>
+      <ul class="text-gray-700 list-disc pl-5 space-y-1 text-sm">
+        <li>Artificial Intelligence (AI) Proficient</li>
+        <li>Analytical Mindset</li>
+        <li>Self-Motivated</li>
+        <li>Pro-active Approach</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements" class="bg-gray-50 py-16">
+  <div class="max-w-4xl mx-auto px-6 text-center">
+    <h2 class="text-3xl sm:text-4xl font-bold mb-8 animate-gradient" data-aos="fade-up">Achievements</h2>
+    <ul class="text-gray-700 text-lg list-disc list-inside space-y-3" data-aos="fade-up" data-aos-delay="200">
+      <li>Awarded 1st Position consistently until Grade 10.</li>
+      <li>Secured exemption in FE subject of AFC based on strong F.Sc. performance.</li>
     </ul>
   </div>
-  <div class="card p-6 bg-white rounded-xl" data-aos="fade-up" data-aos-delay="200">
-    <h3 class="text-xl font-semibold">Arkhitech</h3>
-    <p class="text-gray-600">Finance Intern | May 2025 – June 2025 | Lahore</p>
-    <ul class="mt-3 text-gray-700 text-sm list-disc pl-5">
-      <li>Assisted with financial operations at a software house.</li>
-      <li>Gained exposure to finance functions in a fast-paced environment.</li>
-    </ul>
-  </div>
-</div>
-</div>
 </section>
 
-<!-- ================= EDUCATION ================= -->
-<section id="education" class="max-w-6xl mx-auto px-6 py-20">
-<h2 class="text-4xl font-bold mb-12 text-center uppercase animate-gradient" data-aos="fade-up">Education & Qualifications</h2>
-<div class="grid md:grid-cols-2 gap-8">
-  <div class="card p-6 bg-gray-50 rounded-xl" data-aos="fade-up">
-    <h3 class="text-xl font-semibold">ICAP</h3>
-    <p class="text-gray-600">CAF – 7/8 passed, 1 awaiting result (2023–2025)</p>
+<!-- CONTACT -->
+<section id="contact" class="bg-gray-900 text-white py-16">
+  <div class="max-w-4xl mx-auto px-6 text-center">
+    <h2 class="text-3xl font-bold mb-6" data-aos="fade-up">Let’s Connect</h2>
+    <p class="text-gray-300 mb-10" data-aos="fade-up" data-aos-delay="200">Reach out for collaborations or professional inquiries.</p>
+    <div class="space-y-3 text-lg" data-aos="fade-up" data-aos-delay="400">
+      <div>📧 <a href="mailto:zameerchattha0@gmail.com" class="text-indigo-400 hover:underline">zameerchattha0@gmail.com</a></div>
+      <div>📞 <span class="font-semibold">+92 323 0714288</span></div>
+      <div>🔗 <a href="https://www.linkedin.com/in/zameerhaiderchattha" target="_blank" class="text-indigo-400 hover:underline">LinkedIn Profile</a></div>
+    </div>
   </div>
-  <div class="card p-6 bg-gray-50 rounded-xl" data-aos="fade-up" data-aos-delay="200">
-    <h3 class="text-xl font-semibold">ICAP</h3>
-    <p class="text-gray-600">PRC + AFC Completed (2021–2022)</p>
-  </div>
-  <div class="card p-6 bg-gray-50 rounded-xl" data-aos="fade-up" data-aos-delay="400">
-    <h3 class="text-xl font-semibold">Cause-Way College Hafizabad</h3>
-    <p class="text-gray-600">F.Sc. Pre-Engineering | 82% (2018–2020)</p>
-  </div>
-  <div class="card p-6 bg-gray-50 rounded-xl" data-aos="fade-up" data-aos-delay="600">
-    <h3 class="text-xl font-semibold">Govt. High School No.1 Hafizabad</h3>
-    <p class="text-gray-600">Matric Science | 92.6% (2016–2018)</p>
-  </div>
-</div>
 </section>
 
-<!-- ================= CERTIFICATIONS ================= -->
-<section id="certifications" class="bg-gray-50 py-20">
-<div class="max-w-6xl mx-auto px-6">
-<h2 class="text-4xl font-bold mb-12 text-center uppercase animate-gradient" data-aos="fade-up">Certifications</h2>
-<div class="grid md:grid-cols-2 gap-8">
-  <div class="card p-6 bg-white rounded-xl" data-aos="fade-up">MS Office - Rise Premier School of Accountancy</div>
-  <div class="card p-6 bg-white rounded-xl" data-aos="fade-up" data-aos-delay="200">PPE - Rise Premier School of Accountancy</div>
-  <div class="card p-6 bg-white rounded-xl" data-aos="fade-up" data-aos-delay="400">Advanced Excel for Job & Real World - Udemy</div>
-  <div class="card p-6 bg-white rounded-xl" data-aos="fade-up" data-aos-delay="600">Data Science & Machine Learning (Introductory) - Udemy</div>
-  <div class="card p-6 bg-white rounded-xl" data-aos="fade-up" data-aos-delay="800">Finance & Investment Mastery - Udemy</div>
-</div>
-</div>
-</section>
-
-<!-- ================= SKILLS ================= -->
-<section id="skills" class="max-w-6xl mx-auto px-6 py-20">
-<h2 class="text-4xl font-bold mb-12 text-center uppercase animate-gradient" data-aos="fade-up">Skills</h2>
-<div class="grid md:grid-cols-2 gap-8">
-  <div class="card p-6 bg-gray-50 rounded-xl" data-aos="fade-up">
-    <h3 class="text-lg font-semibold mb-2">Technical Skills</h3>
-    <ul class="text-gray-700 list-disc pl-5 space-y-1 text-sm">
-      <li>Accounting Standards, Financial Reporting</li>
-      <li>Audit, Taxation, ERP Systems</li>
-      <li>MS Office, Advanced Excel</li>
-    </ul>
-  </div>
-  <div class="card p-6 bg-gray-50 rounded-xl" data-aos="fade-up" data-aos-delay="200">
-    <h3 class="text-lg font-semibold mb-2">Soft Skills</h3>
-    <ul class="text-gray-700 list-disc pl-5 space-y-1 text-sm">
-      <li>Artificial Intelligence (AI) Proficient</li>
-      <li>Analytical Mindset</li>
-      <li>Self-Motivated</li>
-      <li>Pro-active Approach</li>
-    </ul>
-  </div>
-</div>
-</section>
-
-<!-- ================= ACHIEVEMENTS ================= -->
-<section id="achievements" class="bg-gray-50 py-20">
-<div class="max-w-4xl mx-auto px-6 text-center">
-<h2 class="text-4xl font-bold mb-8 uppercase animate-gradient" data-aos="fade-up">Achievements</h2>
-<ul class="text-gray-700 text-lg list-disc list-inside space-y-3" data-aos="fade-up" data-aos-delay="200">
-  <li>Awarded 1st Position consistently until Grade 10.</li>
-  <li>Secured exemption in FE subject of AFC based on strong F.Sc. performance.</li>
-</ul>
-</div>
-</section>
-
-<!-- ================= CONTACT ================= -->
-<section id="contact" class="bg-gray-900 text-white py-20">
-<div class="max-w-4xl mx-auto px-6 text-center">
-<h2 class="text-3xl font-bold mb-6" data-aos="fade-up">Let’s Connect</h2>
-<p class="text-gray-300 mb-10" data-aos="fade-up" data-aos-delay="200">Reach out for collaborations or professional inquiries.</p>
-<div class="space-y-3 text-lg" data-aos="fade-up" data-aos-delay="400">
-  <div>📧 <a href="mailto:zameerchattha0@gmail.com" class="text-indigo-400 hover:underline">zameerchattha0@gmail.com</a></div>
-  <div>📞 <span class="font-semibold">+92 323 0714288</span></div>
-  <div>🔗 <a href="https://www.linkedin.com/in/zameerhaiderchattha" target="_blank" class="text-indigo-400 hover:underline">LinkedIn Profile</a></div>
-</div>
-</div>
-</section>
-
-<!-- ================= FOOTER ================= -->
+<!-- FOOTER -->
 <footer class="bg-gray-950 text-gray-400 py-6 text-center">
-<p>© <script>document.write(new Date().getFullYear())</script> Zameer Haider Chattha. All rights reserved.</p>
+  <p>© <script>document.write(new Date().getFullYear())</script> Zameer Haider Chattha. All rights reserved.</p>
 </footer>
 
-<!-- ================= SCRIPTS ================= -->
+<!-- AOS Init & Hero particles -->
 <script>
-  // Splash -> Hero transition
+AOS.init({ duration:1000, once:true });
+
+// Splash fade-out
+window.addEventListener('load', ()=>{
   setTimeout(()=>{
-    document.getElementById('splash').style.opacity='0';
-    setTimeout(()=>{ 
+    document.getElementById('splash').style.opacity=0;
+    setTimeout(()=>{
       document.getElementById('splash').style.display='none';
-      document.getElementById('hero').classList.add('active');
+      document.getElementById('hero').classList.remove('opacity-0');
     },1000);
-  }, 3500);
+  },2500);
+});
 
-  // Particle effect behind Hero
-  const canvas=document.getElementById('hero-canvas');
-  const ctx=canvas.getContext('2d');
+// Hero particles
+const canvas = document.getElementById('hero-canvas');
+const ctx = canvas.getContext('2d');
+let particles=[];
+const createParticles=()=>{
   canvas.width=window.innerWidth;
-  canvas.height=window.innerHeight;
-
-  const particles=[];
-  const particleCount=120;
-
-  function Particle(){
-    this.x=Math.random()*canvas.width;
-    this.y=Math.random()*canvas.height;
-    this.size=Math.random()*2+1;
-    this.speedX=(Math.random()-0.5)*0.3;
-    this.speedY=(Math.random()-0.5)*0.3;
-    this.opacity=Math.random()*0.5+0.2;
+  canvas.height=document.getElementById('hero').offsetHeight;
+  const count=window.innerWidth<640?30:80;
+  particles=[];
+  for(let i=0;i<count;i++){
+    particles.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*3+1, dx:(Math.random()-0.5)*0.5, dy:(Math.random()-0.5)*0.5});
   }
-
-  Particle.prototype.update=function(){
-    this.x+=this.speedX;
-    this.y+=this.speedY;
-    if(this.x<0)this.x=canvas.width;
-    if(this.x>canvas.width)this.x=0;
-    if(this.y<0)this.y=canvas.height;
-    if(this.y>canvas.height)this.y=0;
-  }
-
-  Particle.prototype.draw=function(){
+};
+const draw=()=>{
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle='rgba(255,255,255,0.7)';
+  particles.forEach(p=>{
     ctx.beginPath();
-    ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
-    ctx.fillStyle=`rgba(255,215,0,${this.opacity})`;
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
     ctx.fill();
-  }
-
-  for(let i=0;i<particleCount;i++){particles.push(new Particle());}
-
-  function animateParticles(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    particles.forEach(p=>{ p.update(); p.draw(); });
-    requestAnimationFrame(animateParticles);
-  }
-  animateParticles();
-
-  window.addEventListener('resize',()=>{
-    canvas.width=window.innerWidth;
-    canvas.height=window.innerHeight;
+    p.x+=p.dx; p.y+=p.dy;
+    if(p.x<0||p.x>canvas.width) p.dx*=-1;
+    if(p.y<0||p.y>canvas.height) p.dy*=-1;
   });
-
-  AOS.init({ duration:1000, once:true });
+  requestAnimationFrame(draw);
+};
+createParticles(); draw();
+window.addEventListener('resize', createParticles);
 </script>
 </body>
 </html>
