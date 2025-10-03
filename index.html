@@ -1,286 +1,820 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="scroll-behavior:smooth;">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zameer Haider Chattha - Portfolio</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Zameer Haider Chattha - Portfolio</title>
 
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <!-- Performance: preconnect fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Font & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
-<!-- AOS -->
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <!-- GSAP + ScrollTrigger (optional ultra-smooth animations) -->
+  <script src="https://unpkg.com/gsap@3/dist/gsap.min.js" defer></script>
+  <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js" defer></script>
 
-<style>
-body { font-family: 'Inter', sans-serif; margin:0; padding:0; overflow-x:hidden; }
+  <style>
+    /* ===========================
+       Theme variables
+       =========================== */
+    :root{
+      --bg: #ffffff;            /* page background (light) */
+      --card: #ffffff;          /* card background */
+      --text: #1a1a1a;          /* primary text color (light theme) */
+      --muted: #6b7280;         /* secondary text */
+      --accent: #0d6efd;        /* professional blue */
+      --accent-2: #38a169;      /* green accent */
+      --accent-3: #ff0077;      /* pink accent for gradient */
+      --shadow: 0 10px 30px rgba(2,6,23,0.06);
+      --radius: 12px;
+      --particle-color: #2b2b2b; /* dark particles for light theme */
+      --glass: rgba(255,255,255,0.55);
+      --glass-dark: rgba(10,14,22,0.4);
+    }
+    [data-theme="dark"]{
+      --bg: #0b1220;
+      --card: #0f1724;
+      --text: #e6eef6;
+      --muted: #94a3b8;
+      --accent: #00d0ff;
+      --accent-2: #18d9b6;
+      --accent-3: #ff6bb8;
+      --shadow: 0 12px 40px rgba(0,0,0,0.6);
+      --particle-color: #e9eef8; /* light particles for dark theme */
+      --glass: rgba(15,20,30,0.5);
+      --glass-dark: rgba(255,255,255,0.03);
+    }
 
-/* Splash animation */
-.wave-text span {
-  display: inline-block;
-  animation: splashWave 2.5s infinite;
-}
-.wave-text span:nth-child(odd) { animation-delay: 0.1s; }
-.wave-text span:nth-child(even) { animation-delay: 0.3s; }
-@keyframes splashWave {
-  0%,100% { transform: translateY(0); color: #FFD700; }
-  50% { transform: translateY(-12px); color: #FF69B4; }
-}
+    /* ===========================
+       Base reset / typography
+       =========================== */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: 'Poppins', sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      transition: background .25s ease, color .25s ease;
+      overflow-x:hidden;
+      overflow-y:hidden; /* unlocked after preloader */
+    }
+    a{color:inherit}
+    img{display:block;max-width:100%}
+    h1,h2,h3,h4,h5{ text-transform:uppercase; letter-spacing:0.6px; }
 
-/* Hero heading wave animation */
-.hero-wave span {
-  display:inline-block;
-  transform-origin:bottom center;
-  animation: heroWave 3s ease-in-out infinite;
-}
-.hero-wave span:nth-child(odd) { animation-delay: 0s; }
-.hero-wave span:nth-child(even) { animation-delay: 0.05s; }
-@keyframes heroWave {
-  0%,100% { transform: translateY(0); color: #FFD700; }
-  50% { transform: translateY(-8px); color: #4ADE80; }
-}
+    /* ===========================
+       Intro / Preloader (Cinematic)
+       =========================== */
+    .intro-screen{
+      position:fixed; inset:0; z-index:99999;
+      display:flex; flex-direction:column; justify-content:center; align-items:center;
+      gap:8px; text-align:center;
+      background: linear-gradient(135deg, rgba(255,255,255,0.98), rgba(243,247,251,0.98));
+      transition: opacity .7s ease, visibility .7s ease;
+      pointer-events: all;
+    }
+    .intro-screen.hidden{ opacity:0; visibility:hidden; pointer-events:none; }
+    .intro-heading,
+    .intro-heading span {
+      display:inline-block;
+      font-size: clamp(2.2rem, 9vw, 5rem);
+      font-weight:900;
+      line-height:0.95;
+      margin-bottom:6px;
+      background: linear-gradient(90deg,#ff0077,#70f8ff,#ff8c00,#38a169,#e0ff00,#ff0077);
+      background-size:1400% 1400%;
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      animation: gradientShift 3s linear infinite;
+      will-change: transform, opacity;
+    }
+    .intro-heading span { animation: wavyEffect 1.05s ease-in-out infinite; display:inline-block; }
+    .intro-subheading { font-size: clamp(1rem, 2.6vw, 1.2rem); color:var(--muted); font-weight:600; }
 
-/* Card hover */
-.card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-.card:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(0,0,0,0.15); }
+    @keyframes gradientShift {
+      0%{ background-position: 0% 50% } 50%{ background-position: 100% 50% } 100%{ background-position: 0% 50% }
+    }
+    @keyframes wavyEffect {
+      0%,100%{ transform: translateY(0) } 25%{ transform: translateY(-8px) } 75%{ transform: translateY(8px) }
+    }
 
-/* Hero background & overlay */
-#hero { position: relative; min-height: 100vh; display:flex; align-items:center; justify-content:center; text-align:center; overflow:hidden; padding:0 1rem; }
-#hero-background { position:absolute; inset:0; background-image: url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'); background-size:cover; background-position:center; z-index:0; }
-#hero-overlay { position:absolute; inset:0; background-color:rgba(0,0,0,0.5); z-index:1; }
+    /* ===========================
+       Header
+       =========================== */
+    header{
+      position:fixed; top:0; left:0; right:0; z-index:1200;
+      background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.65));
+      backdrop-filter: blur(6px);
+      box-shadow: var(--shadow);
+      transition: background .25s, box-shadow .25s;
+    }
+    [data-theme="dark"] header{ background: linear-gradient(180deg, rgba(10,14,22,0.6), rgba(10,14,22,0.55)); }
+    nav.container { max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:12px 20px; }
+    .logo { font-size:1.35rem; font-weight:900; color:var(--accent); }
+    .nav-menu{ list-style:none; display:flex; gap:18px; align-items:center; }
+    .nav-menu a{ text-decoration:none; color:var(--text); font-weight:600; padding:6px 0; position:relative; }
+    .nav-menu a::after{ content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:0; height:3px; background:var(--accent); border-radius:2px; transition: width .25s; }
+    .nav-menu a:hover::after{ width:100% }
+    .mobile-menu{ display:none; }
+    .download-link{ color:var(--accent-3); font-weight:700; text-decoration:underline; }
 
-/* Particle canvas */
-#hero-canvas { position:absolute; inset:0; z-index:2; pointer-events:none; }
+    /* ===========================
+       Particles background (full page)
+       =========================== */
+    #particles-global {
+      position:fixed; inset:0; z-index:-1; pointer-events:none; overflow:hidden;
+    }
+    .particle {
+      position:absolute; border-radius:50%; will-change: transform,opacity; mix-blend-mode:screen;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+      opacity:0.9;
+      pointer-events:none;
+      transform-origin:center center;
+    }
 
-/* Gradient animate for section headings */
-.animate-gradient {
-  background: linear-gradient(270deg,#FFD700,#FF69B4,#4ADE80,#3B82F6,#F472B6,#FFD700);
-  background-size: 1200% 1200%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradientShift 12s ease infinite;
-}
-@keyframes gradientShift {
-  0% { background-position:0% 50%; }
-  50% { background-position:100% 50%; }
-  100% { background-position:0% 50%; }
-}
-</style>
+    /* ===========================
+       Hero
+       =========================== */
+    .hero {
+      min-height:85vh;
+      display:flex; align-items:center; justify-content:center;
+      padding:110px 20px 60px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.0), rgba(255,255,255,0.0));
+      position:relative;
+      overflow:visible;
+    }
+    .hero-content{ max-width:1200px; margin:0 auto; display:grid; grid-template-columns:2fr 1fr; gap:32px; align-items:center; }
+    .hero h1 { font-size: clamp(2.4rem, 4.5vw, 3.6rem); font-weight:900; margin-bottom:.3rem; background: linear-gradient(90deg, var(--accent-3), #70f8ff, #ff8c00, var(--accent-2)); background-size:600% 600%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation: gradientShift 4s linear infinite; }
+    .hero h2 { font-size:1rem; margin-bottom:12px; font-weight:600; color:var(--muted); text-transform:uppercase; }
+    .hero p { color: var(--text); font-size:1.02rem; line-height:1.5; }
+
+    .cta { margin-top:14px; display:flex; gap:12px; flex-wrap:wrap; }
+    .btn { display:inline-block; padding:10px 18px; border-radius:999px; font-weight:700; text-decoration:none; transition:transform .18s ease, box-shadow .18s ease; }
+    .btn-primary { background:var(--accent); color:#fff; box-shadow: 0 8px 20px rgba(13, 110, 253, 0.12); }
+    .btn-secondary { background:transparent; color:var(--accent); border:2px solid var(--accent); }
+
+    .profile-card { padding:18px; border-radius:var(--radius); background: linear-gradient(180deg, var(--glass), rgba(255,255,255,0.03)); box-shadow:var(--shadow); text-align:center; transform-style:preserve-3d; will-change:transform,opacity; }
+    .profile-photo { width:150px; height:150px; margin:0 auto 12px; border-radius:50%; overflow:hidden; border:5px solid var(--accent-2); background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(0,0,0,0.02)); }
+    .profile-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+    /* ===========================
+       Sections common styling
+       =========================== */
+    section { padding:70px 20px; max-width:1200px; margin:0 auto; position:relative; }
+    .section-title { font-size:clamp(1.6rem, 3.2vw, 2.6rem); text-align:center; margin-bottom:36px; font-weight:800; color:var(--accent); letter-spacing:1px; }
+    .card { background:var(--card); padding:18px; border-radius:12px; box-shadow:var(--shadow); margin-bottom:18px; }
+    .row { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
+    .col-1 { grid-column: 1 / -1; }
+
+    /* ===========================
+       About
+       =========================== */
+    .about-content { display:grid; grid-template-columns:2fr 1fr; gap:28px; align-items:center; }
+
+    /* ===========================
+       Skills
+       =========================== */
+    .skills-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px; }
+    .skill-name { display:flex; justify-content:space-between; font-weight:700; margin-bottom:8px; }
+    .skill-track { height:12px; background: rgba(0,0,0,0.06); border-radius:99px; overflow:hidden; }
+    .skill-fill { width:0; height:100%; background: linear-gradient(90deg, var(--accent-3), var(--accent-2)); transition: width 1.6s cubic-bezier(.23,1,.32,1); }
+
+    /* ===========================
+       Experience / Education / Certifications / Contact
+       =========================== */
+    .timeline { display:grid; gap:18px; }
+    .timeline-item { background:var(--card); padding:16px; border-radius:10px; box-shadow:var(--shadow); transform-origin:left center; }
+    .contact-content { display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start; }
+    .contact-info p { margin-bottom:8px; color:var(--muted); }
+    form input, form textarea { width:100%; padding:10px; border-radius:8px; border:1px solid rgba(0,0,0,0.08); background:transparent; color:var(--text); margin-bottom:10px; transition:box-shadow .2s, border-color .2s; }
+
+    /* ===========================
+       Footer
+       =========================== */
+    footer{ text-align:center; padding:18px 10px; margin-top:30px; color:var(--muted); background:transparent; }
+
+    /* ===========================
+       Reveal & Premium Animations
+       =========================== */
+    .section-animate { opacity:0; transform:translateY(36px); transition: all 0.8s cubic-bezier(.23,1,.32,1); will-change: transform,opacity; }
+    .section-animate.visible { opacity:1; transform:none; }
+
+    /* Specific premium keyframes */
+    @keyframes fadeZoomIn {
+      0% { opacity:0; transform: scale(0.94) translateY(32px); }
+      100% { opacity:1; transform: scale(1) translateY(0); }
+    }
+    @keyframes slideLeft {
+      0% { opacity:0; transform:translateX(-80px) rotateY(-6deg); }
+      100% { opacity:1; transform:translateX(0) rotateY(0); }
+    }
+    @keyframes slideRight {
+      0% { opacity:0; transform:translateX(80px) rotateY(6deg); }
+      100% { opacity:1; transform:translateX(0) rotateY(0); }
+    }
+    @keyframes flipIn {
+      0% { opacity:0; transform:rotateY(90deg) scale(0.95); transform-origin:center; }
+      100% { opacity:1; transform:rotateY(0) scale(1); }
+    }
+    @keyframes floatCard {
+      0%,100% { transform:translateY(0) rotate(0deg); }
+      50% { transform:translateY(-8px) rotate(1.2deg); }
+    }
+    .hero .profile-card {
+      animation: floatCard 6s ease-in-out infinite;
+    }
+
+    /* When a section becomes visible, apply distinct animations */
+    .section-animate.visible { animation: fadeZoomIn 0.9s cubic-bezier(.22,1,.36,1) forwards; }
+    #about.visible .card:nth-child(1) { animation: slideLeft 0.9s ease both; }
+    #about.visible .card:nth-child(2) { animation: slideRight 0.9s ease both; }
+
+    #skills.visible .card { animation: fadeZoomIn 0.8s ease both; }
+    #skills.visible .skill-fill { transition: width 1.6s cubic-bezier(.68,-0.55,.27,1.55); }
+
+    #experience.visible .timeline-item:nth-child(odd) { animation: slideLeft 0.9s ease both; }
+    #experience.visible .timeline-item:nth-child(even) { animation: slideRight 0.9s ease both; }
+
+    #education.visible .card { animation: slideUp 0.9s ease both; }
+    @keyframes slideUp {
+      0% { opacity:0; transform:translateY(60px); }
+      100% { opacity:1; transform:translateY(0); }
+    }
+
+    #certifications.visible .card { animation: flipIn 0.9s ease both; transform-style: preserve-3d; }
+
+    #contact.visible .card { animation: fadeZoomIn 0.9s ease both; }
+    form input:focus, form textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 18px rgba(13,110,253,0.12), 0 0 6px rgba(24, 221, 166, 0.06);
+      outline:none;
+      transition: all .25s ease;
+    }
+
+    /* subtle hover tilt for cards (mouse only) */
+    .card[data-tilt="true"]:hover { transform: translateY(-6px) scale(1.01); transition: transform .32s cubic-bezier(.2,.9,.3,1); }
+
+    /* ===========================
+       Responsive
+       =========================== */
+    @media (max-width: 992px){
+      .hero-content { grid-template-columns:1fr; text-align:center; }
+      .about-content { grid-template-columns:1fr; }
+      .contact-content { grid-template-columns:1fr; }
+      .row { grid-template-columns:1fr; }
+      header { position:sticky; top:0; }
+    }
+    @media (max-width: 600px){
+      .nav-menu { display:none; }
+      .mobile-menu { display:block; }
+      body{ font-size:15px; }
+      .profile-photo { width:130px; height:130px }
+    }
+
+    /* ===========================
+       Reduced motion preference
+       =========================== */
+    @media (prefers-reduced-motion: reduce){
+      * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+      .skill-fill { transition: none !important; }
+    }
+
+  </style>
 </head>
-<body class="bg-white text-gray-900">
+<body>
 
-<!-- SPLASH -->
-<div id="splash" class="fixed inset-0 bg-gray-900 flex flex-col items-center justify-center z-50 px-4 text-center">
-  <h1 class="wave-text text-5xl sm:text-6xl md:text-7xl font-extrabold leading-snug break-words">
-    <span>Z</span><span>A</span><span>M</span><span>E</span><span>E</span><span>R</span><br class="sm:hidden">
-    <span>H</span><span>A</span><span>I</span><span>D</span><span>E</span><span>R</span>
-  </h1>
-  <p class="mt-4 text-base sm:text-lg md:text-xl text-gray-300">A Chartered Accountant</p>
-</div>
+  <!-- Particles (global background) -->
+  <div id="particles-global" aria-hidden="true"></div>
 
-<!-- HERO -->
-<section id="hero" class="opacity-0 transition-opacity duration-1000">
-  <div id="hero-background"></div>
-  <div id="hero-overlay"></div>
-  <canvas id="hero-canvas"></canvas>
-  <div class="relative z-10 max-w-4xl mx-auto text-center px-4">
-    <h1 class="hero-wave text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold mb-4 leading-snug break-words">
-      <span>Z</span><span>A</span><span>M</span><span>E</span><span>E</span><span>R</span> <br>
-      <span>H</span><span>A</span><span>I</span><span>D</span><span>E</span><span>R</span> <span>C</span><span>H</span><span>A</span><span>T</span><span>T</span><span>H</span><span>A</span>
-    </h1>
-    <p class="text-base sm:text-lg md:text-xl text-gray-200 mb-6 leading-relaxed">
-      A student of Chartered Accountancy at <span class="font-semibold">Institute of Chartered Accountants of Pakistan</span>
-    </p>
-    <div class="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">
-      <a href="mailto:zameerchattha0@gmail.com" class="px-6 py-3 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700 transition text-center">📧 Email Me</a>
-      <a href="https://www.linkedin.com/in/zameerhaiderchattha" target="_blank" class="px-6 py-3 bg-white text-gray-900 rounded-lg shadow hover:bg-gray-100 transition text-center">🔗 LinkedIn</a>
-    </div>
+  <!-- Intro preloader -->
+  <div class="intro-screen" id="intro-screen" role="dialog" aria-label="Intro: Zameer Haider Chattha">
+    <h1 class="intro-heading" id="intro-heading">ZAMEER HAIDER</h1>
+    <div class="intro-subheading">A Chartered Accountancy Student</div>
   </div>
-</section>
 
-<!-- NAVIGATION -->
-<nav class="sticky top-0 bg-white shadow z-40">
-  <div class="max-w-6xl mx-auto px-6 py-3 flex flex-wrap justify-center gap-4 text-sm sm:text-base">
-    <a href="#hero" class="text-gray-800 hover:text-indigo-600">Home</a>
-    <a href="#objective" class="text-gray-800 hover:text-indigo-600">Objective</a>
-    <a href="#experience" class="text-gray-800 hover:text-indigo-600">Experience</a>
-    <a href="#education" class="text-gray-800 hover:text-indigo-600">Education</a>
-    <a href="#certifications" class="text-gray-800 hover:text-indigo-600">Certifications</a>
-    <a href="#skills" class="text-gray-800 hover:text-indigo-600">Skills</a>
-    <a href="#achievements" class="text-gray-800 hover:text-indigo-600">Achievements</a>
-    <a href="#contact" class="text-gray-800 hover:text-indigo-600">Contact</a>
-  </div>
-</nav>
+  <!-- Header -->
+  <header id="main-header" role="banner">
+    <nav class="container" aria-label="Main Navigation">
+      <a class="logo" href="#home">ZH.</a>
 
-<!-- OBJECTIVE -->
-<section id="objective" class="max-w-6xl mx-auto px-6 py-16 text-center" data-aos="fade-up">
-  <h2 class="text-3xl sm:text-4xl font-bold mb-8 uppercase animate-gradient">Objective</h2>
-  <p class="text-gray-700 text-lg sm:text-xl leading-relaxed max-w-3xl mx-auto">
-    Dedicated Chartered Accountancy student at <span class="font-semibold">ICAP</span> aspiring to build a strong career with professional competence and integrity. Strong interest in <span class="font-semibold">External Audit</span> as first preference, while also eager to contribute in <span class="font-semibold">Internal Audit, Accounts and Finance, Taxation, ERP,</span> or <span class="font-semibold">Advisory</span> roles. Bringing analytical ability, attention to detail, and adaptability to align with dynamic organizational needs.
-  </p>
-</section>
-
-<!-- EXPERIENCE -->
-<section id="experience" class="bg-gray-50 py-16">
-  <div class="max-w-6xl mx-auto px-6">
-    <h2 class="text-3xl sm:text-4xl font-bold mb-12 text-center animate-gradient" data-aos="fade-up">Experience</h2>
-    <div class="grid md:grid-cols-2 gap-8">
-      <div class="card p-6 bg-white rounded-xl" data-aos="fade-up">
-        <h3 class="text-xl font-semibold">Haris & Co. Engineering Concern Pvt. Ltd.</h3>
-        <p class="text-gray-600">Accounts & Finance Intern | June 2025 – Present | Lahore</p>
-        <ul class="mt-3 text-gray-700 text-sm list-disc pl-5">
-          <li>Assigned to the Invoicing Department, ensuring accuracy and compliance.</li>
-          <li>Applied theoretical accounting & finance knowledge to real-world processes.</li>
-        </ul>
-      </div>
-      <div class="card p-6 bg-white rounded-xl" data-aos="fade-up" data-aos-delay="200">
-        <h3 class="text-xl font-semibold">Arkhitech</h3>
-        <p class="text-gray-600">Finance Intern | May 2025 – June 2025 | Lahore</p>
-        <ul class="mt-3 text-gray-700 text-sm list-disc pl-5">
-          <li>Assisted with financial operations at a software house.</li>
-          <li>Gained exposure to finance functions in a fast-paced environment.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- EDUCATION -->
-<section id="education" class="max-w-6xl mx-auto px-6 py-16">
-  <h2 class="text-3xl sm:text-4xl font-bold mb-12 text-center animate-gradient" data-aos="fade-up">Education & Professional Qualification</h2>
-  <div class="grid md:grid-cols-2 gap-8">
-    <div class="card p-6 bg-gray-50 rounded-xl" data-aos="fade-up">
-      <h3 class="text-xl font-semibold">ICAP</h3>
-      <p class="text-gray-600">CAF – 7/8 passed, 1 awaiting result (2023–2025)</p>
-    </div>
-    <div class="card p-6 bg-gray-50 rounded-xl" data-aos="fade-up" data-aos-delay="200">
-      <h3 class="text-xl font-semibold">ICAP</h3>
-      <p class="text-gray-600">PRC + AFC Completed (2021–2022)</p>
-    </div>
-    <div class="card p-6 bg-gray-50 rounded-xl" data-aos="fade-up" data-aos-delay="400">
-      <h3 class="text-xl font-semibold">Cause-Way College Hafizabad</h3>
-      <p class="text-gray-600">F.Sc. Pre-Engineering | 82% (2018–2020)</p>
-    </div>
-    <div class="card p-6 bg-gray-50 rounded-xl" data-aos="fade-up" data-aos-delay="600">
-      <h3 class="text-xl font-semibold">Govt. High School No.1 Hafizabad</h3>
-      <p class="text-gray-600">Matric Science | 92.6% (2016–2018)</p>
-    </div>
-  </div>
-</section>
-
-<!-- CERTIFICATIONS -->
-<section id="certifications" class="bg-gray-50 py-16">
-  <div class="max-w-6xl mx-auto px-6">
-    <h2 class="text-3xl sm:text-4xl font-bold mb-12 text-center animate-gradient" data-aos="fade-up">Certifications</h2>
-    <div class="grid md:grid-cols-2 gap-8">
-      <div class="card p-6 bg-white rounded-xl" data-aos="fade-up">MS Office Certified – Rise Premier School of Accountancy</div>
-      <div class="card p-6 bg-white rounded-xl" data-aos="fade-up" data-aos-delay="200">PPE Certified – Rise Premier School of Accountancy</div>
-      <div class="card p-6 bg-white rounded-xl" data-aos="fade-up" data-aos-delay="400">Advanced Excel for Job & Real World – Udemy</div>
-      <div class="card p-6 bg-white rounded-xl" data-aos="fade-up" data-aos-delay="600">Data Science & Machine Learning (Intro) – Udemy</div>
-      <div class="card p-6 bg-white rounded-xl" data-aos="fade-up" data-aos-delay="800">Finance & Investment Mastery – Udemy</div>
-    </div>
-  </div>
-</section>
-
-<!-- SKILLS -->
-<section id="skills" class="max-w-6xl mx-auto px-6 py-16">
-  <h2 class="text-3xl sm:text-4xl font-bold mb-12 text-center animate-gradient" data-aos="fade-up">Skills</h2>
-  <div class="grid md:grid-cols-2 gap-8">
-    <div class="card p-6 bg-gray-50 rounded-xl" data-aos="fade-up">
-      <h3 class="text-lg font-semibold mb-2">Technical Skills</h3>
-      <ul class="text-gray-700 list-disc pl-5 space-y-1 text-sm">
-        <li>Accounting Standards, Financial Reporting</li>
-        <li>Audit, Taxation, ERP Systems</li>
-        <li>MS Office, Advanced Excel</li>
+      <ul class="nav-menu" id="nav-menu" role="menubar" aria-hidden="false">
+        <li><a href="#home" role="menuitem">Home</a></li>
+        <li><a href="#about" role="menuitem">About</a></li>
+        <li><a href="#skills" role="menuitem">Skills</a></li>
+        <li><a href="#experience" role="menuitem">Experience</a></li>
+        <li><a href="#education" role="menuitem">Education</a></li>
+        <li><a href="#certifications" role="menuitem">Certifications</a></li>
+        <li><a href="#contact" role="menuitem">Contact</a></li>
+        <li><a class="download-link" href="Zameer_Haider_Chattha_CV.pdf" download rel="noopener">Download CV</a></li>
       </ul>
+
+      <div style="display:flex;gap:12px;align-items:center">
+        <button id="theme-toggle" aria-label="Toggle theme" title="Toggle theme" style="background:none;border:none;font-size:1.05rem;color:var(--text)"><i class="fas fa-moon" aria-hidden="true"></i></button>
+        <button id="mobile-toggle" class="mobile-menu" aria-label="Open menu" style="background:none;border:none;font-size:1.2rem;color:var(--text)"><i class="fas fa-bars"></i></button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section id="home" class="hero section-animate" aria-labelledby="home-title">
+      <div class="hero-content">
+        <div>
+          <h1 id="home-title">ZAMEER HAIDER CHATTHA</h1>
+          <h2>A STUDENT OF CHARTERED ACCOUNTANCY AT INSTITUTE OF CHARTERED ACCOUNTANTS OF PAKISTAN</h2>
+          <p>Dedicated Chartered Accountancy student at ICAP aspiring to build a strong career with professional competence and integrity. Strong interest in External Audit as first preference, while also eager to contribute in Internal Audit, Accounts and Finance, Taxation, ERP, or Advisory roles. Bringing analytical ability, attention to detail, and adaptability to align with dynamic organizational needs.</p>
+
+          <div class="cta">
+            <a class="btn btn-primary" href="#contact">GET IN TOUCH</a>
+            <a class="btn btn-secondary" href="#experience">VIEW EXPERIENCE</a>
+            <a class="btn btn-primary" href="Zameer_Haider_Chattha_CV.pdf" download><i class="fas fa-download" aria-hidden="true"></i> DOWNLOAD CV</a>
+          </div>
+        </div>
+
+        <aside class="profile-card" aria-labelledby="profile-name" data-tilt="true">
+          <div class="profile-photo" aria-hidden="true">
+            <img src="https://i.ibb.co/CpYRMn6P/Gemini-Generated-Image-bzfir6bzfir6bzfi.jpg" alt="Zameer Haider Chattha" loading="lazy">
+          </div>
+          <h3 id="profile-name">ZAMEER HAIDER CHATTHA</h3>
+          <p style="margin:6px 0;font-weight:600;color:var(--muted)">CAF Student, ICAP</p>
+          <div style="font-size:0.95rem;color:var(--muted);line-height:1.4">
+            <div><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Garden Town, Lahore, Pakistan</div>
+            <div><i class="fas fa-phone" aria-hidden="true"></i> +92 323 0714288</div>
+            <div><i class="fas fa-envelope" aria-hidden="true"></i> zameerchattha0@gmail.com</div>
+            <div><i class="fab fa-linkedin" aria-hidden="true"></i> <a href="https://linkedin.com/in/zameerhaiderchattha" target="_blank" rel="noopener" style="color:var(--accent)">LinkedIn</a></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section-animate" aria-labelledby="about-title">
+      <h2 id="about-title" class="section-title">About Me</h2>
+      <div class="about-content">
+        <div class="card">
+          <h3>OBJECTIVE & EXPERTISE</h3>
+          <p>Dedicated Chartered Accountancy student at ICAP aspiring to build a strong career with professional competence and integrity. Strong interest in External Audit as first preference, while also eager to contribute in Internal Audit, Accounts and Finance, Taxation, ERP, or Advisory roles. Bringing analytical ability, attention to detail, and adaptability to align with dynamic organizational needs.</p>
+          <p>My foundational education, combined with practical internship experience, ensures readiness to undertake complex professional tasks under supervision, fostering a commitment to ethical practice and continuous learning.</p>
+        </div>
+
+        <div class="card">
+          <h3>COMMITMENT TO EXCELLENCE</h3>
+          <p style="color:var(--muted)">Committed to ethical practice, financial transparency, and delivering measurable value. Comfortable collaborating in teams and comfortable learning firm-specific ERP and reporting systems during Articleship.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="section-animate" aria-labelledby="skills-title">
+      <h2 id="skills-title" class="section-title">Skills & Competencies</h2>
+      <div class="skills-grid">
+        <div class="card">
+          <div class="skill-name"><span>Audit & Assurance</span><span>90%</span></div>
+          <div class="skill-track"><div class="skill-fill" data-percent="90%"></div></div>
+        </div>
+        <div class="card">
+          <div class="skill-name"><span>Taxation (FBR)</span><span>80%</span></div>
+          <div class="skill-track"><div class="skill-fill" data-percent="80%"></div></div>
+        </div>
+        <div class="card">
+          <div class="skill-name"><span>ERP Systems (SAP)</span><span>75%</span></div>
+          <div class="skill-track"><div class="skill-fill" data-percent="75%"></div></div>
+        </div>
+        <div class="card">
+          <div class="skill-name"><span>Advanced Excel & Data Analysis</span><span>88%</span></div>
+          <div class="skill-track"><div class="skill-fill" data-percent="88%"></div></div>
+        </div>
+        <div class="card">
+          <div class="skill-name"><span>AI Proficiency</span><span>90%</span></div>
+          <div class="skill-track"><div class="skill-fill" data-percent="90%"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience" class="section-animate" aria-labelledby="exp-title">
+      <h2 id="exp-title" class="section-title">Professional Experience</h2>
+      <div class="timeline">
+        <div class="timeline-item card">
+          <h3>Accounts & Finance Intern</h3>
+          <h4>Haris & Co. Engineering Concern Pvt. Ltd. | Lahore</h4>
+          <ul>
+            <li>Managed full cycle of invoicing for the Engineering Department, ensuring alignment with contracts and accounting standards.</li>
+            <li>Conducted daily reconciliation of petty cash and processed expense reports, minimizing discrepancies by 10%.</li>
+            <li>Supported the senior accountant in preparing month-end journal entries and initial trial balances.</li>
+          </ul>
+        </div>
+
+        <div class="timeline-item card">
+          <h3>Finance Intern</h3>
+          <h4>Arkhitech | Lahore</h4>
+          <ul>
+            <li>Assisted with financial operations in a technology setting, focusing on project budgeting and cost tracking.</li>
+            <li>Gained exposure to agile finance functions and ERP data entry within a fast-paced environment.</li>
+            <li>Prepared preliminary financial reports for management review.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section id="education" class="section-animate" aria-labelledby="edu-title">
+      <h2 id="edu-title" class="section-title">Education & Qualifications</h2>
+      <div class="row">
+        <div class="card">
+          <h3>Institute of Chartered Accountants of Pakistan (ICAP)</h3>
+          <p><strong>Certified in Accounting & Finance (CAF)</strong><br>7/8 papers passed — 2023-2025</p>
+        </div>
+        <div class="card">
+          <h3>ICAP Foundation Level</h3>
+          <p><strong>PRC & AFC Completed</strong><br>2021-2022</p>
+        </div>
+        <div class="card">
+          <h3>Cause-Way College Hafizabad</h3>
+          <p><strong>F.Sc Pre-Engineering</strong><br>2018-2020</p>
+        </div>
+        <div class="card">
+          <h3>Govt. High School No.1 Hafizabad</h3>
+          <p><strong>Matric Science</strong><br>2016-2018</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CERTIFICATIONS -->
+    <section id="certifications" class="section-animate" aria-labelledby="cert-title">
+      <h2 id="cert-title" class="section-title">Certifications</h2>
+      <div class="row">
+        <div class="card"><h3>MS Office Certified</h3><p>Advanced proficiency in Word, Excel & PowerPoint.</p></div>
+        <div class="card"><h3>Advanced Excel Mastery</h3><p>PivotTables, VLOOKUP, Macros.</p></div>
+        <div class="card"><h3>Finance & Investment</h3><p>Fundamental investment concepts.</p></div>
+        <div class="card"><h3>Data Science & ML (Intro)</h3><p>Intro to modeling & stats.</p></div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section-animate" aria-labelledby="contact-title">
+      <h2 id="contact-title" class="section-title">Get In Touch</h2>
+      <div class="contact-content">
+        <div class="card contact-info">
+          <h3>Direct Contact Details</h3>
+          <p><strong>Location:</strong> Garden Town, Lahore, Pakistan</p>
+          <p><strong>Phone:</strong> +92 323 0714288</p>
+          <p><strong>Email:</strong> zameerchattha0@gmail.com</p>
+          <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/zameerhaiderchattha" target="_blank" rel="noopener">linkedin.com/in/zameerhaiderchattha</a></p>
+        </div>
+
+        <form class="card" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST" aria-label="Contact form">
+          <h3 style="margin-bottom:12px;color:var(--accent)">Send Me a Message</h3>
+          <label for="name" style="font-weight:600;display:block;margin-bottom:6px">Your Name</label>
+          <input id="name" name="name" type="text" required>
+          <label for="email" style="font-weight:600;display:block;margin-bottom:6px">Your Email</label>
+          <input id="email" name="email" type="email" required>
+          <label for="subject" style="font-weight:600;display:block;margin-bottom:6px">Subject</label>
+          <input id="subject" name="subject" type="text" required>
+          <label for="message" style="font-weight:600;display:block;margin-bottom:6px">Message</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+          <button type="submit">Send Secure Message</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div style="max-width:1200px;margin:0 auto;padding:12px 20px;">
+      <p>&copy; 2025 Zameer Haider Chattha. All rights reserved.</p>
     </div>
-    <div class="card p-6 bg-gray-50 rounded-xl" data-aos="fade-up" data-aos-delay="200">
-      <h3 class="text-lg font-semibold mb-2">Soft Skills</h3>
-      <ul class="text-gray-700 list-disc pl-5 space-y-1 text-sm">
-        <li>Artificial Intelligence (AI) Proficient</li>
-        <li>Analytical Mindset</li>
-        <li>Self-Motivated</li>
-        <li>Pro-active Approach</li>
-      </ul>
-    </div>
-  </div>
-</section>
+  </footer>
 
-<!-- ACHIEVEMENTS -->
-<section id="achievements" class="bg-gray-50 py-16">
-  <div class="max-w-4xl mx-auto px-6 text-center">
-    <h2 class="text-3xl sm:text-4xl font-bold mb-8 animate-gradient" data-aos="fade-up">Achievements</h2>
-    <ul class="text-gray-700 text-lg list-disc list-inside space-y-3" data-aos="fade-up" data-aos-delay="200">
-      <li>Awarded 1st Position consistently until Grade 10.</li>
-      <li>Secured exemption in FE subject of AFC based on strong F.Sc. performance.</li>
-    </ul>
-  </div>
-</section>
+  <!-- -------------------------
+       JavaScript (single-file)
+       ------------------------- -->
+  <script>
+    /* --------------------------
+       Helper selectors
+       -------------------------- */
+    const qs = s => document.querySelector(s);
+    const qsa = s => Array.from(document.querySelectorAll(s));
+    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-<!-- CONTACT -->
-<section id="contact" class="bg-gray-900 text-white py-16">
-  <div class="max-w-4xl mx-auto px-6 text-center">
-    <h2 class="text-3xl font-bold mb-6" data-aos="fade-up">Let’s Connect</h2>
-    <p class="text-gray-300 mb-10" data-aos="fade-up" data-aos-delay="200">Reach out for collaborations or professional inquiries.</p>
-    <div class="space-y-3 text-lg" data-aos="fade-up" data-aos-delay="400">
-      <div>📧 <a href="mailto:zameerchattha0@gmail.com" class="text-indigo-400 hover:underline">zameerchattha0@gmail.com</a></div>
-      <div>📞 <span class="font-semibold">+92 323 0714288</span></div>
-      <div>🔗 <a href="https://www.linkedin.com/in/zameerhaiderchattha" target="_blank" class="text-indigo-400 hover:underline">LinkedIn Profile</a></div>
-    </div>
-  </div>
-</section>
+    /* --------------------------
+       Intro: split heading into letter spans + timed hide
+       -------------------------- */
+    (function introSetup() {
+      const heading = qs('#intro-heading');
+      if (!heading) return;
+      const text = heading.textContent.trim();
+      heading.innerHTML = '';
+      text.split('').forEach((ch, i) => {
+        const sp = document.createElement('span');
+        sp.textContent = ch === ' ' ? '\u00A0' : ch;
+        sp.style.display = 'inline-block';
+        sp.style.animationDelay = `${i * 0.05}s`;
+        heading.appendChild(sp);
+      });
 
-<!-- FOOTER -->
-<footer class="bg-gray-950 text-gray-400 py-6 text-center">
-  <p>© <script>document.write(new Date().getFullYear())</script> Zameer Haider Chattha. All rights reserved.</p>
-</footer>
+      // hide intro after 2.2s, unlock scrolling
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          const intro = qs('#intro-screen');
+          if (intro) intro.classList.add('hidden');
+          document.body.style.overflowY = 'auto';
+        }, 2200);
+        // fallback unlock after 4.5s
+        setTimeout(() => { document.body.style.overflowY = 'auto'; }, 4500);
+      });
+    })();
 
-<!-- AOS Init & Hero particles -->
-<script>
-AOS.init({ duration:1000, once:true });
+    /* --------------------------
+       Theme toggle (persist)
+       -------------------------- */
+    (function themeToggle() {
+      const btn = qs('#theme-toggle');
+      if (!btn) return;
+      const applied = localStorage.getItem('theme');
+      if (applied === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+      // update icon
+      function updateIcon() {
+        const icon = qs('#theme-toggle i');
+        if (document.documentElement.getAttribute('data-theme') === 'dark') {
+          icon.className = 'fas fa-sun';
+        } else { icon.className = 'fas fa-moon'; }
+      }
+      updateIcon();
 
-// Splash fade-out
-window.addEventListener('load', ()=>{
-  setTimeout(()=>{
-    document.getElementById('splash').style.opacity=0;
-    setTimeout(()=>{
-      document.getElementById('splash').style.display='none';
-      document.getElementById('hero').classList.remove('opacity-0');
-    },1000);
-  },2500);
-});
+      btn.addEventListener('click', () => {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        if (isDark) {
+          document.documentElement.removeAttribute('data-theme');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          localStorage.setItem('theme', 'dark');
+        }
+        updateIcon();
+        refreshParticlesColor();
+      });
+    })();
 
-// Hero particles
-const canvas = document.getElementById('hero-canvas');
-const ctx = canvas.getContext('2d');
-let particles=[];
-const createParticles=()=>{
-  canvas.width=window.innerWidth;
-  canvas.height=document.getElementById('hero').offsetHeight;
-  const count=window.innerWidth<640?30:80;
-  particles=[];
-  for(let i=0;i<count;i++){
-    particles.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*3+1, dx:(Math.random()-0.5)*0.5, dy:(Math.random()-0.5)*0.5});
-  }
-};
-const draw=()=>{
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle='rgba(255,255,255,0.7)';
-  particles.forEach(p=>{
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fill();
-    p.x+=p.dx; p.y+=p.dy;
-    if(p.x<0||p.x>canvas.width) p.dx*=-1;
-    if(p.y<0||p.y>canvas.height) p.dy*=-1;
-  });
-  requestAnimationFrame(draw);
-};
-createParticles(); draw();
-window.addEventListener('resize', createParticles);
-</script>
+    /* --------------------------
+       Mobile menu toggle
+       -------------------------- */
+    (function mobileMenu() {
+      const mobileBtn = qs('#mobile-toggle');
+      const nav = qs('#nav-menu');
+      if (!mobileBtn || !nav) return;
+      mobileBtn.addEventListener('click', () => {
+        nav.classList.toggle('active');
+      });
+    })();
+
+    /* --------------------------
+       Smooth scroll anchors
+       -------------------------- */
+    (function smoothAnchors() {
+      qsa('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', function (e) {
+          const href = this.getAttribute('href');
+          if (!href || href === '#') return;
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth' });
+          }
+        });
+      });
+    })();
+
+    /* --------------------------
+       Skills bar animation (fallback + IntersectionObserver)
+       -------------------------- */
+    (function animateSkills() {
+      const fills = qsa('.skill-fill');
+      // simple immediate fill if no intersection support or reduced motion
+      if (prefersReduced || !('IntersectionObserver' in window)) {
+        fills.forEach(f => f.style.width = f.dataset.percent || '0%');
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries, o) => {
+        entries.forEach(ent => {
+          if (ent.isIntersecting) {
+            ent.target.querySelectorAll('.skill-fill').forEach(f => {
+              const pct = f.dataset.percent || '0%';
+              f.style.width = pct;
+            });
+            o.unobserve(ent.target);
+          }
+        });
+      }, { threshold: 0.25 });
+      qsa('#skills').forEach(el => observer.observe(el));
+    })();
+
+    /* --------------------------
+       Section reveal: IntersectionObserver + GSAP integration
+       -------------------------- */
+    (function sectionReveal() {
+      const sections = qsa('section');
+      sections.forEach(s => s.classList.add('section-animate'));
+
+      // If GSAP + ScrollTrigger are available and user doesn't prefer reduced motion, use them for staggered scroll-driven reveals
+      if (!prefersReduced && window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+
+        sections.forEach((sec, i) => {
+          // base fade + lift
+          gsap.fromTo(sec, { autoAlpha: 0, y: 36, scale: 0.996 }, {
+            duration: 0.9,
+            autoAlpha: 1,
+            y: 0,
+            scale: 1,
+            ease: "power3.out",
+            delay: 0,
+            scrollTrigger: {
+              trigger: sec,
+              start: "top 78%",
+              toggleActions: "play none none none",
+            },
+            onStart: () => sec.classList.add('visible')
+          });
+
+          // stagger inner cards for cinematic entrance
+          const inner = sec.querySelectorAll('.card, .timeline-item, .profile-card, .skill-track');
+          if (inner.length) {
+            gsap.fromTo(inner, { autoAlpha: 0, y: 18, rotateX: 4, transformOrigin: "center top" }, {
+              autoAlpha: 1,
+              y: 0,
+              rotateX: 0,
+              duration: 0.9,
+              ease: "power3.out",
+              stagger: 0.12,
+              scrollTrigger: { trigger: sec, start: "top 78%", toggleActions: "play none none none" }
+            });
+          }
+
+          // Section-specific subtle parallax for hero background elements if present
+          if (sec.id === 'home') {
+            // slight parallax of the profile card and heading
+            const h1 = sec.querySelector('h1');
+            const card = sec.querySelector('.profile-card');
+            if (h1) gsap.to(h1, { y: -12, ease: "none", scrollTrigger:{ trigger: sec, scrub: 0.8, start: "top top", end: "bottom top" } });
+            if (card) gsap.to(card, { y: 10, rotation: -0.6, ease: "none", scrollTrigger:{ trigger: sec, scrub: 0.9, start: "top top", end: "bottom top" } });
+          }
+        });
+
+        // Extra: animate timeline items with alternating X offset for dramatic slide
+        const timelineItems = qsa('#experience .timeline-item');
+        timelineItems.forEach((it, idx) => {
+          const fromX = (idx % 2 === 0) ? -80 : 80;
+          gsap.from(it, { x: fromX, autoAlpha: 0, duration: 0.9, ease: "power3.out", scrollTrigger: { trigger: it, start: "top 85%", toggleActions: "play none none none" } });
+        });
+      } else {
+        // Fallback: IntersectionObserver simple reveal (keeps script lightweight)
+        if (!('IntersectionObserver' in window)) {
+          sections.forEach(s => s.classList.add('visible'));
+          return;
+        }
+        const obs = new IntersectionObserver((entries, o) => {
+          entries.forEach(ent => {
+            if (ent.isIntersecting) {
+              ent.target.classList.add('visible');
+              // stagger children slightly
+              ent.target.querySelectorAll('.card, .timeline-item, .skill-fill').forEach((el, idx) => {
+                el.style.transitionDelay = `${idx * 90}ms`;
+              });
+              o.unobserve(ent.target);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -80px 0px' });
+        sections.forEach(section => obs.observe(section));
+      }
+    })();
+
+    /* --------------------------
+       Particles: improved subtle professional design
+       -------------------------- */
+    (function particlesSystem() {
+      const container = qs('#particles-global');
+      if (!container) return;
+
+      const PARTICLE_COUNT = Math.min(Math.max(Math.round(window.innerWidth / 60), 18), 40); // scale with width but clamp
+      const SIZES = [6, 8, 10, 12, 16, 20];
+      const COLORS = ['#ff0077', '#38a169', '#ffd600', '#00d0ff', '#8a4bff'];
+      const particles = [];
+
+      function createParticle(i) {
+        const el = document.createElement('div');
+        el.className = 'particle';
+        const size = SIZES[Math.floor(Math.random() * SIZES.length)];
+        el.style.width = `${size}px`;
+        el.style.height = `${size}px`;
+        el.style.left = `${Math.random() * 100}vw`;
+        el.style.top = `${Math.random() * 100}vh`;
+        const c1 = COLORS[Math.floor(Math.random() * COLORS.length)];
+        const c2 = COLORS[Math.floor(Math.random() * COLORS.length)];
+        el.style.background = `radial-gradient(circle at 30% 30%, ${c1} 0%, ${c2} 65%, rgba(255,255,255,0.06) 100%)`;
+        el.style.opacity = (Math.random() * 0.5) + 0.4;
+        el.style.transform = `translate3d(0,0,0)`;
+        el.dataset.size = size;
+        el.style.willChange = 'transform, opacity, filter';
+        container.appendChild(el);
+
+        const amplitudeX = (Math.random() * 18) + 8; // vw
+        const amplitudeY = (Math.random() * 10) + 6; // vh
+        const speed = (Math.random() * 0.6) + 0.2; // multiplier for speed
+        const phase = Math.random() * Math.PI * 2;
+
+        particles.push({ el, size, amplitudeX, amplitudeY, speed, phase, startX: parseFloat(el.style.left), startY: parseFloat(el.style.top) });
+      }
+
+      for (let i=0;i<PARTICLE_COUNT;i++) createParticle(i);
+
+      let raf;
+      let last = performance.now();
+      function loop(now) {
+        const dt = (now - last) / 1000;
+        last = now;
+        particles.forEach((p, idx) => {
+          p.phase += dt * p.speed * 0.6;
+          const x = p.startX + Math.sin(p.phase) * p.amplitudeX;
+          const y = p.startY + Math.cos(p.phase * 0.9) * p.amplitudeY;
+          // update transform in vw/vh via translate3d
+          p.el.style.transform = `translate3d(${x}vw, ${y}vh, 0)`;
+          // soft blur based on size
+          p.el.style.filter = `blur(${Math.max(0,(p.size-8)/7)}px)`;
+        });
+        raf = requestAnimationFrame(loop);
+      }
+      raf = requestAnimationFrame(loop);
+
+      // Theme adaptation
+      function refreshParticlesColor() {
+        const computed = getComputedStyle(document.documentElement).getPropertyValue('--particle-color').trim();
+        particles.forEach(p => {
+          p.el.style.mixBlendMode = computed === '#e9eef8' ? 'screen' : 'multiply';
+        });
+      }
+      function setParticleVar() {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        if (isDark) document.documentElement.style.setProperty('--particle-color','#e9eef8');
+        else document.documentElement.style.setProperty('--particle-color','#2b2b2b');
+        refreshParticlesColor();
+      }
+      setParticleVar();
+      const themeObserver = new MutationObserver(setParticleVar);
+      themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+      // responsive adapt
+      function adaptForScreen() {
+        const small = window.matchMedia('(max-width:480px)').matches;
+        particles.forEach(p => {
+          const scale = small ? 0.6 : 1;
+          const s = p.el.dataset.size * scale;
+          p.el.style.width = `${s}px`;
+          p.el.style.height = `${s}px`;
+        });
+      }
+      window.addEventListener('resize', adaptForScreen, { passive: true });
+      adaptForScreen();
+
+      // cleanup on navigation unload
+      window.addEventListener('beforeunload', () => {
+        cancelAnimationFrame(raf);
+      });
+    })();
+
+    /* --------------------------
+       Simple tilt effect for profile card (mouse only)
+       -------------------------- */
+    (function simpleTilt() {
+      const card = qs('.profile-card');
+      if (!card || prefersReduced) return;
+
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const rx = (e.clientX - rect.left) / rect.width;
+        const ry = (e.clientY - rect.top) / rect.height;
+        const rotY = (rx - 0.5) * 10; // -5..5
+        const rotX = (0.5 - ry) * 8;
+        card.style.transform = `rotateY(${rotY}deg) rotateX(${rotX}deg) translateZ(8px)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+      });
+    })();
+
+    /* --------------------------
+       Ensure page unlocks if something goes wrong
+       -------------------------- */
+    setTimeout(() => { document.body.style.overflowY = 'auto'; }, 6000);
+
+  </script>
 </body>
 </html>
