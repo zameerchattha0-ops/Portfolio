@@ -1,1 +1,188 @@
-/* placeholder */
+/* ============================================================
+   DESIGN TOKENS — Zameer Haider Portfolio
+   ============================================================
+   Single source of truth for all visual properties.
+   Light mode = default. Dark mode via [data-theme="dark"].
+   ============================================================ */
+
+:root {
+  /* ── COLOR PALETTE ── */
+  /* Accent Gradient */
+  --accent-h: 235;
+  --accent-s: 80%;
+  --accent-l: 55%;
+  --accent: hsl(var(--accent-h), var(--accent-s), var(--accent-l));
+  --accent-hover: hsl(var(--accent-h), var(--accent-s), 48%);
+  --accent-soft: hsl(var(--accent-h), 60%, 95%);
+  --accent-secondary: hsl(270, 70%, 55%);
+  --accent-tertiary: hsl(330, 70%, 55%);
+  --gradient-accent: linear-gradient(135deg, var(--accent), var(--accent-secondary), var(--accent-tertiary));
+  --gradient-rainbow: linear-gradient(90deg,
+      #4f46e5, #7c3aed, #ec4899, #f43f5e, #f97316,
+      #eab308, #22c55e, #06b6d4, #3b82f6, #8b5cf6, #4f46e5);
+  --gradient-accent-text: var(--gradient-rainbow);
+  --gradient-accent-text-size: 300% 100%;
+
+  /* Surfaces — Light */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f6f7fb;
+  --bg-tertiary: #eef0f6;
+  --bg-elevated: #ffffff;
+  --bg-glass: rgba(255, 255, 255, 0.72);
+
+  /* Text — Light */
+  --text-primary: #13152a;
+  --text-secondary: #4a4e6a;
+  --text-muted: #848899;
+  --text-on-accent: #ffffff;
+
+  /* Borders — Light */
+  --border: #dfe1ea;
+  --border-strong: #c5c8d8;
+
+  /* Shadows — Light */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.10);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.12);
+  --shadow-glow: 0 0 30px hsla(var(--accent-h), var(--accent-s), var(--accent-l), 0.15);
+  --shadow-card-hover: 0 8px 32px rgba(0, 0, 0, 0.12);
+
+  /* Card */
+  --card-bg: #ffffff;
+  --card-border: var(--border);
+
+  /* ── TYPOGRAPHY ── */
+  /* Scale using clamp(min, preferred, max) */
+  --font-display: 'Clash Display', 'Inter', sans-serif;
+  --font-body: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  --text-xs: clamp(0.7rem, 0.65rem + 0.25vw, 0.8rem);
+  --text-sm: clamp(0.8rem, 0.75rem + 0.3vw, 0.9rem);
+  --text-base: clamp(0.95rem, 0.88rem + 0.35vw, 1.1rem);
+  --text-lg: clamp(1.05rem, 0.95rem + 0.5vw, 1.25rem);
+  --text-xl: clamp(1.2rem, 1rem + 0.8vw, 1.5rem);
+  --text-2xl: clamp(1.4rem, 1.1rem + 1.2vw, 1.9rem);
+  --text-3xl: clamp(1.8rem, 1.3rem + 1.8vw, 2.5rem);
+  --text-4xl: clamp(2.2rem, 1.5rem + 2.8vw, 3.5rem);
+  --text-5xl: clamp(2.8rem, 1.8rem + 4vw, 4.5rem);
+
+  --leading-tight: 1.15;
+  --leading-snug: 1.3;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.75;
+
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.025em;
+  --tracking-wider: 0.05em;
+
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* ── SPACING ── */
+  --space-3xs: 0.2rem;
+  --space-2xs: 0.375rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  --space-4xl: 6rem;
+  --space-5xl: 8rem;
+
+  --section-padding: clamp(4rem, 6vw, 8rem);
+  --container-max: 1200px;
+  --container-wide: 1400px;
+  --container-narrow: 800px;
+  --container-padding: clamp(1.25rem, 3vw, 2.5rem);
+
+  /* ── RADIUS ── */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+  --radius-full: 9999px;
+
+  /* ── TRANSITIONS ── */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+  --duration-slower: 600ms;
+  --transition-colors: color var(--duration-normal) var(--ease-out),
+    background-color var(--duration-normal) var(--ease-out),
+    border-color var(--duration-normal) var(--ease-out),
+    box-shadow var(--duration-normal) var(--ease-out);
+  --transition-transform: transform var(--duration-normal) var(--ease-out);
+  --transition-all: all var(--duration-normal) var(--ease-out);
+
+  /* ── Z-INDEX ── */
+  --z-behind: -1;
+  --z-normal: 1;
+  --z-tooltip: 10;
+  --z-sticky: 100;
+  --z-overlay: 200;
+  --z-modal: 300;
+
+  /* ── NAV ── */
+  --nav-height: 4rem;
+  --nav-bg: rgba(255, 255, 255, 0.85);
+  --nav-border: var(--border);
+}
+
+
+/* ══════════════════════════════════════
+   DARK THEME — Fully engineered
+   ══════════════════════════════════════ */
+[data-theme="dark"] {
+  /* Surfaces */
+  --bg-primary: #0c0e1a;
+  --bg-secondary: #141627;
+  --bg-tertiary: #1c1f36;
+  --bg-elevated: #1e2140;
+  --bg-glass: rgba(14, 16, 30, 0.78);
+
+  /* Text */
+  --text-primary: #e4e5f0;
+  --text-secondary: #a0a4c0;
+  --text-muted: #6b6f8a;
+
+  /* Borders */
+  --border: #2a2d48;
+  --border-strong: #3d4168;
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.35);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.4);
+  --shadow-glow: 0 0 40px hsla(var(--accent-h), 70%, 60%, 0.2);
+  --shadow-card-hover: 0 8px 32px rgba(0, 0, 0, 0.4);
+
+  /* Cards */
+  --card-bg: #181b30;
+  --card-border: #2a2d48;
+
+  /* Accent — Brighter for dark mode */
+  --accent: hsl(var(--accent-h), 85%, 68%);
+  --accent-hover: hsl(var(--accent-h), 85%, 75%);
+  --accent-soft: hsla(var(--accent-h), 60%, 60%, 0.12);
+  --accent-secondary: hsl(270, 75%, 72%);
+  --accent-tertiary: hsl(330, 75%, 68%);
+  --gradient-accent-text: var(--gradient-rainbow);
+
+  /* Nav */
+  --nav-bg: rgba(12, 14, 26, 0.88);
+  --nav-border: var(--border);
+}
