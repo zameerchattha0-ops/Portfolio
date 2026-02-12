@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Insights and Perspectives by Zameer Haider - AI, Finance, and Accounting.">
+    <title>Insights — Zameer Haider</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/tokens.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/sections.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/terminal.css">
+
+    <script>
+        (function () {
+            var saved = localStorage.getItem('theme');
+            var preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', saved || preferred);
+        })();
+    </script>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="nav" id="nav" role="navigation" aria-label="Main Navigation">
+        <div class="container nav__inner">
+            <a href="index.html" class="nav__brand" aria-label="Zameer Haider Home">
+                Z<span>.</span>Haider
+            </a>
+
+            <div class="nav__links" id="nav-links" role="menubar">
+                <a href="index.html#about" class="nav__link">About</a>
+                <a href="index.html#experience" class="nav__link">Experience</a>
+
+                <div class="nav__item">
+                    <a href="tools.html" class="nav__link" role="menuitem">Tools <span
+                            style="font-size: 0.7em; margin-left: 4px;">▼</span></a>
+                    <div class="nav__dropdown">
+                        <a href="tools.html" class="nav__dropdown-link"><span>🛠️</span> Overview</a>
+                        <a href="tools.html#wealth-simulator" class="nav__dropdown-link"><span>📈</span> Wealth
+                            Simulator</a>
+                        <a href="tools.html#ai-analyst" class="nav__dropdown-link"><span>👁️‍🗨️</span> AI Financial
+                            Analyst</a>
+                        <a href="tools.html#tax-calculator" class="nav__dropdown-link"><span>🇵🇰</span> FBR Tax
+                            Optimizer</a>
+                    </div>
+                </div>
+
+                <div class="nav__item">
+                    <a href="articles.html" class="nav__link active" role="menuitem">Insights <span
+                            style="font-size: 0.7em; margin-left: 4px;">▼</span></a>
+                    <div class="nav__dropdown">
+                        <a href="articles.html" class="nav__dropdown-link"><span>📑</span> Latest Articles</a>
+                        <a href="articles.html" class="nav__dropdown-link"><span>💡</span> Featured Perspectives</a>
+                    </div>
+                </div>
+
+                <a href="index.html#contact" class="nav__link">Contact</a>
+            </div>
+
+            <div class="nav__actions">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                    <span class="theme-toggle__icon">☀️</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HEADER -->
+    <section class="section section--alt" style="padding-top: 15rem; min-height: 100vh;">
+        <div class="container">
+            <div class="section__header reveal">
+                <span class="section__label">Knowledge Base</span>
+                <h2 class="section__title">Professional <span class="gradient-text">Insights</span></h2>
+                <p class="section__subtitle">Exploring the intersection of Accounting, AI, and Future Technologies.</p>
+            </div>
+
+            <!-- Articles Grid -->
+            <div class="grid grid--3" id="articles-grid">
+                <!-- Injected via JS -->
+            </div>
+
+            <div style="text-align: center; margin-top: var(--space-2xl);">
+                <a href="index.html" class="btn btn--outline">← Back to Home</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer__copyright">
+                &copy; 2026 <a href="index.html">Zameer Haider</a>. Crafted with precision.
+            </p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/articles.js"></script>
+    <script src="js/terminal.js"></script>
+</body>
+
+</html>
