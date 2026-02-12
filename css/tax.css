@@ -1,0 +1,416 @@
+/* ══════════════════════════════════
+   PAKISTAN TAX ENGINE (FBR)
+   ══════════════════════════════════ */
+
+.tax-card {
+    background: linear-gradient(135deg, #f3fcf5 0%, #ffffff 100%);
+    border: 1px solid #d1fae5;
+    /* Emerald-100 */
+}
+
+[data-theme="dark"] .tax-card {
+    background: linear-gradient(135deg, #064e3b 0%, #022c22 100%);
+    /* Emerald-900 */
+    border-color: #059669;
+}
+
+.tax-card .tool-card__icon {
+    background: #d1fae5;
+    color: #059669;
+    /* Emerald-600 */
+    border-color: #a7f3d0;
+}
+
+[data-theme="dark"] .tax-card .tool-card__icon {
+    background: #065f46;
+    color: #34d399;
+    border-color: #047857;
+}
+
+.tax-card .tool-card__title {
+    color: #047857;
+    /* Emerald-700 */
+}
+
+[data-theme="dark"] .tax-card .tool-card__title {
+    color: #a7f3d0;
+}
+
+/* Accordion Styles */
+.tax-accordion {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-xs);
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+}
+
+.tax-accordion__header {
+    padding: var(--space-sm) var(--space-md);
+    background: rgba(209, 250, 229, 0.3);
+    /* Low opacity emerald */
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    font-size: var(--text-sm);
+    color: #047857;
+}
+
+.tax-accordion__header:hover {
+    background: rgba(209, 250, 229, 0.6);
+}
+
+.tax-accordion__content {
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s ease;
+}
+
+.tax-accordion.open .tax-accordion__content {
+    padding: var(--space-sm);
+    max-height: 500px;
+    /* Arbitrary large height */
+    overflow: visible;
+}
+
+.tax-accordion__icon {
+    transition: transform 0.3s ease;
+}
+
+.tax-accordion.open .tax-accordion__icon {
+    transform: rotate(180deg);
+}
+
+/* Subgroups */
+.tax-subgroup {
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px dashed var(--border);
+    padding: var(--space-xs);
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--space-sm);
+}
+
+.tax-sublabel {
+    display: block;
+    font-size: 0.75rem;
+    color: #059669;
+    font-weight: 700;
+    margin-bottom: var(--space-2xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Checkbox & Select */
+.tax-checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-xs) 0;
+}
+
+.tax-checkbox-group input[type="checkbox"] {
+    width: auto;
+    cursor: pointer;
+    accent-color: #10b981;
+}
+
+.tax-checkbox-group label {
+    font-size: var(--text-xs);
+    color: var(--text-primary);
+    cursor: pointer;
+    margin: 0;
+}
+
+.tax__form select {
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    padding: var(--space-sm);
+    border-radius: var(--radius-md);
+    font-family: var(--font-mono);
+    width: 100%;
+    font-size: var(--text-xs);
+}
+
+/* Results Audit Trail */
+.audit-trail-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+    padding-bottom: 4px;
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.05);
+}
+
+.audit-trail-item.highlight {
+    font-weight: 600;
+    color: #047857;
+    border-bottom: 1px solid #059669;
+    margin-top: 8px;
+}
+
+.slab-badge {
+    background: #059669;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 4px;
+}
+
+/* Calculate Button */
+.btn--tax {
+    background: linear-gradient(135deg, #059669, #10b981);
+    color: #fff;
+    width: 100%;
+    margin-top: var(--space-md);
+    border: none;
+    font-weight: 600;
+}
+
+.btn--tax:hover {
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    transform: translateY(-1px);
+}
+
+/* Results Area */
+.tax__results {
+    margin-top: var(--space-lg);
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px dashed #10b981;
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+    display: none;
+}
+
+[data-theme="dark"] .tax__results {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.tax__results.visible {
+    display: block;
+    animation: slideUp 0.4s ease-out;
+}
+
+.tax-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--space-xs);
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+}
+
+.tax-row--total {
+    margin-top: var(--space-md);
+    padding-top: var(--space-sm);
+    border-top: 1px solid var(--border);
+    font-weight: 700;
+    color: var(--text-primary);
+    font-size: var(--text-base);
+}
+
+.tax-val {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    color: #059669;
+}
+
+[data-theme="dark"] .tax-val {
+    color: #34d399;
+}
+
+.tax-val--negative {
+    color: #ef4444;
+}
+
+.tax-disclaimer {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: var(--space-sm);
+    text-align: center;
+    font-style: italic;
+}
+
+/* 📊 TAX CHART (DONUT) */
+.tax-chart-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: var(--space-md) 0;
+    gap: var(--space-md);
+}
+
+.tax-chart {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: conic-gradient(var(--chart-color-1) 0% var(--chart-p1), var(--chart-color-2) var(--chart-p1) 100%);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.tax-chart::after {
+    content: '';
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background: var(--bg-card);
+    /* Matches card bg */
+    border-radius: 50%;
+}
+
+.tax-chart-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.8rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+/* 🏆 GAMIFICATION BADGE */
+.tax-badge-container {
+    text-align: center;
+    margin-top: var(--space-sm);
+}
+
+.tax-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    border-radius: 50px;
+    color: white;
+    font-weight: 600;
+    animation: badgeBounce 0.6s ease-out;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.tax-badge__emoji {
+    font-size: 1.6em;
+}
+
+.tax-badge__text {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    line-height: 1.3;
+}
+
+.tax-badge__title {
+    font-size: 0.95em;
+    font-weight: 700;
+}
+
+.tax-badge__sub {
+    font-size: 0.7em;
+    opacity: 0.85;
+    font-weight: 400;
+}
+
+/* Level Colors */
+.tax-badge--green {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.tax-badge--blue {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.tax-badge--purple {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+
+.tax-badge--orange {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+}
+
+.tax-badge--red {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+@keyframes badgeBounce {
+    0% {
+        transform: scale(0.5) translateY(20px);
+        opacity: 0;
+    }
+
+    60% {
+        transform: scale(1.1) translateY(-5px);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* 🖨️ PRINT STYLES */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    #tax-calculator,
+    #tax-calculator * {
+        visibility: visible;
+    }
+
+    #tax-calculator {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 20px;
+        box-shadow: none;
+        border: 2px solid #000;
+    }
+
+    /* Hide Controls when printing result */
+    .tax__form,
+    .btn--print,
+    .tool-card__icon {
+        display: none !important;
+    }
+
+    .tax__results {
+        display: block !important;
+        border: none;
+        background: white;
+    }
+
+    /* Expand Accordions for details? Or just hide form? 
+       User wants "Tax Card", usually just the Result Audit Trail. 
+       We hid .tax__form so accordions are gone. 
+       We only show #tax-results. */
+
+    .audit-trail-item {
+        border-bottom: 1px solid #ccc;
+        color: black;
+    }
+
+    .tax-result-header {
+        border-bottom: 2px solid black;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+    }
+}

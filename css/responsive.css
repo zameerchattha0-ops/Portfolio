@@ -1,0 +1,305 @@
+/* ============================================================
+   RESPONSIVE — Device-adaptive rules
+   ============================================================ */
+
+/* ══════════════════════════════════════
+   MOBILE — Up to 640px
+   ══════════════════════════════════════ */
+@media (max-width: 768px) {
+
+    /* Nav Mobile Drawer */
+    .nav__links {
+        position: fixed;
+        top: var(--nav-height);
+        left: 0;
+        right: 0;
+        bottom: 0;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        background: rgba(255, 255, 255, 0.97);
+        padding: var(--space-lg) var(--space-xl);
+        gap: var(--space-xs);
+        transform: translateX(100%);
+        transition: transform var(--duration-slow) var(--ease-out);
+        border-top: 1px solid var(--border);
+        backdrop-filter: blur(10px);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    [data-theme="dark"] .nav__links {
+        background: rgba(15, 15, 25, 0.97);
+    }
+
+    .nav__links.open {
+        transform: translateX(0);
+    }
+
+    .nav__link {
+        font-size: var(--text-lg);
+        padding: var(--space-sm) var(--space-xl);
+        border-radius: var(--radius-full);
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav__toggle {
+        display: flex;
+    }
+
+    /* ── FLATTEN DROPDOWNS IN MOBILE DRAWER ── */
+    .nav__item {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .nav__dropdown {
+        position: static;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        min-width: unset;
+        backdrop-filter: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        width: 100%;
+    }
+
+    .nav__dropdown-link {
+        justify-content: center;
+        padding: var(--space-xs) var(--space-md);
+        font-size: var(--text-sm);
+        opacity: 0.75;
+    }
+
+    .nav__dropdown-link:hover {
+        opacity: 1;
+    }
+
+    /* Ensure Header doesn't cover content */
+    section,
+    .section {
+        scroll-margin-top: calc(var(--nav-height) + 2rem);
+    }
+
+    /* Hero Mobile Optimization */
+    .hero {
+        min-height: 100dvh;
+        height: auto;
+        align-items: center;
+        padding-top: calc(var(--nav-height) + 5.5rem);
+        padding-bottom: 4rem;
+        text-align: center;
+    }
+
+    .hero__label {
+        margin-top: var(--space-md);
+    }
+
+    .hero__content {
+        gap: var(--space-lg);
+        justify-content: center;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .hero__stats {
+        flex-direction: column;
+        gap: var(--space-lg);
+    }
+
+    .hero__actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .hero__actions .btn {
+        justify-content: center;
+    }
+
+    /* About */
+    .about__grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-xl);
+    }
+
+    /* Contact */
+    .contact__grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-xl);
+    }
+
+    /* Section headers */
+    .section__header {
+        margin-bottom: var(--space-2xl);
+    }
+
+    /* Section title size reduction */
+    .section__title {
+        font-size: var(--text-2xl);
+    }
+
+    /* Timeline */
+    .timeline {
+        padding-left: var(--space-xl);
+    }
+
+    /* Profile Section */
+    .hero__profile-card {
+        padding: var(--space-lg);
+    }
+
+    /* Grids */
+    .grid--3 {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ══════════════════════════════════════
+   TABLET — 641px to 1024px
+   ══════════════════════════════════════ */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .nav__links {
+        gap: var(--space-2xs);
+    }
+
+    .nav__link {
+        padding: var(--space-xs) var(--space-sm);
+        font-size: var(--text-xs);
+    }
+
+    .about__grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-2xl);
+    }
+
+    .contact__grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-xl);
+    }
+
+    .hero__stats {
+        gap: var(--space-xl);
+    }
+}
+
+
+/* ══════════════════════════════════════
+   SMALL TABLETS / LARGE PHONES (Portrait)
+   ══════════════════════════════════════ */
+@media (max-width: 768px) and (orientation: portrait) {
+    .section {
+        padding-block: clamp(3rem, 5vw, 5rem);
+    }
+}
+
+
+/* ══════════════════════════════════════
+   ULTRA-WIDE — 2000px+
+   ══════════════════════════════════════ */
+@media (min-width: 2000px) {
+    :root {
+        --text-base: 1.15rem;
+    }
+
+    .section {
+        padding-block: 7rem;
+    }
+}
+
+
+/* ══════════════════════════════════════
+   TOUCH DEVICES
+   ══════════════════════════════════════ */
+@media (pointer: coarse) {
+    .btn {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    .nav__link {
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+    }
+
+    .tag {
+        padding: var(--space-xs) var(--space-md);
+    }
+
+    /* Disable hover effects on touch */
+    .card:hover {
+        transform: none;
+    }
+
+    .tag:hover {
+        transform: none;
+    }
+}
+
+
+/* ══════════════════════════════════════
+   HIGH DPI SCREENS
+   ══════════════════════════════════════ */
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+    .timeline::before {
+        width: 1.5px;
+    }
+}
+
+
+/* ══════════════════════════════════════
+   KEYBOARD NAVIGATION
+   ══════════════════════════════════════ */
+@media (any-hover: hover) and (pointer: fine) {
+    .card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-card-hover);
+    }
+
+    .tag:hover {
+        transform: translateY(-1px);
+    }
+}
+
+
+/* ══════════════════════════════════════
+   PRINT STYLES
+   ══════════════════════════════════════ */
+@media print {
+
+    .nav,
+    .hero__bg,
+    .theme-toggle,
+    .nav__toggle {
+        display: none !important;
+    }
+
+    .hero {
+        min-height: auto;
+        padding: 2rem 0;
+    }
+
+    .section {
+        padding: 1.5rem 0;
+        break-inside: avoid;
+    }
+
+    body {
+        color: #000;
+        background: #fff;
+    }
+
+    .gradient-text {
+        -webkit-text-fill-color: #000;
+        background: none;
+    }
+}

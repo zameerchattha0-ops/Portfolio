@@ -1,0 +1,207 @@
+/* ============================================================
+   DESIGN TOKENS — Zameer Haider Portfolio
+   ============================================================
+   Single source of truth for all visual properties.
+   Light mode = default. Dark mode via [data-theme="dark"].
+   ============================================================ */
+
+:root {
+  /* ── COLOR PALETTE ── */
+  /* Accent Gradient — Deep Royal Blue/Indigo base */
+  --accent-h: 230;
+  --accent-s: 85%;
+  --accent-l: 58%;
+  --accent: hsl(var(--accent-h), var(--accent-s), var(--accent-l));
+  --accent-hover: hsl(var(--accent-h), var(--accent-s), 50%);
+  --accent-soft: hsla(var(--accent-h), 80%, 96%, 1);
+  /* Softer, cleaner tint */
+  --accent-secondary: hsl(260, 80%, 60%);
+  /* Rich Purple */
+  --accent-tertiary: hsl(320, 80%, 60%);
+  /* Deep Pink/Magenta */
+
+  /* Refined Gradient - Smoother transitions */
+  --gradient-accent: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+  --gradient-rainbow: linear-gradient(90deg,
+      #4f46e5, #7c3aed, #db2777, #e11d48, #ea580c,
+      #ca8a04, #16a34a, #0891b2, #2563eb, #7c3aed, #4f46e5);
+  --gradient-accent-text: var(--gradient-rainbow);
+  --gradient-accent-text-size: 300% 100%;
+
+  /* Surfaces — Light */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  /* Cool gray-white */
+  --bg-tertiary: #f1f5f9;
+  --bg-elevated: #ffffff;
+  --bg-glass: rgba(255, 255, 255, 0.85);
+  /* Slightly more opaque for better legibility */
+
+  /* Text — Light — Increased Contrast */
+  --text-primary: #0f172a;
+  /* Slate 900 */
+  --text-secondary: #475569;
+  /* Slate 600 */
+  --text-muted: #94a3b8;
+  /* Slate 400 */
+  --text-on-accent: #ffffff;
+
+  /* Borders — Light */
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+
+  /* Shadows — Premium Layered Shadows */
+  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow-sm: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 2px 4px -1px rgba(15, 23, 42, 0.03);
+  --shadow-md: 0 10px 15px -3px rgba(15, 23, 42, 0.04), 0 4px 6px -2px rgba(15, 23, 42, 0.02);
+  --shadow-lg: 0 20px 25px -5px rgba(15, 23, 42, 0.05), 0 10px 10px -5px rgba(15, 23, 42, 0.02);
+  --shadow-xl: 0 25px 50px -12px rgba(15, 23, 42, 0.08);
+  /* Deep, soft shadow */
+  --shadow-glow: 0 0 40px hsla(var(--accent-h), var(--accent-s), var(--accent-l), 0.12);
+  --shadow-card-hover: 0 25px 50px -12px rgba(15, 23, 42, 0.12);
+
+  /* Card */
+  --card-bg: #ffffff;
+  --card-border: var(--border);
+
+  /* ── TYPOGRAPHY ── */
+  /* Scale using clamp(min, preferred, max) */
+  --font-display: 'Clash Display', 'Inter', sans-serif;
+  --font-body: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  --text-xs: clamp(0.75rem, 0.7rem + 0.2vw, 0.875rem);
+  --text-sm: clamp(0.875rem, 0.8rem + 0.25vw, 0.95rem);
+  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-lg: clamp(1.125rem, 1.05rem + 0.35vw, 1.35rem);
+  --text-xl: clamp(1.25rem, 1.15rem + 0.5vw, 1.65rem);
+  --text-2xl: clamp(1.5rem, 1.3rem + 0.8vw, 2.15rem);
+  --text-3xl: clamp(2rem, 1.7rem + 1.2vw, 2.75rem);
+  --text-4xl: clamp(2.5rem, 2rem + 2vw, 3.75rem);
+  --text-5xl: clamp(3.25rem, 2.5rem + 3vw, 5rem);
+
+  /* Refined Leading */
+  --leading-tight: 1.1;
+  --leading-snug: 1.35;
+  --leading-normal: 1.65;
+  --leading-relaxed: 1.85;
+
+  /* Refined Tracking */
+  --tracking-tight: -0.02em;
+  --tracking-normal: -0.005em;
+  --tracking-wide: 0.03em;
+  --tracking-wider: 0.06em;
+
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* ── SPACING — Increased for luxury feel ── */
+  --space-3xs: 0.25rem;
+  --space-2xs: 0.4rem;
+  --space-xs: 0.625rem;
+  --space-sm: 0.875rem;
+  --space-md: 1.25rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.25rem;
+  --space-2xl: 3.5rem;
+  --space-3xl: 5rem;
+  --space-4xl: 7.5rem;
+  --space-5xl: 10rem;
+
+  --section-padding: clamp(5rem, 8vw, 10rem);
+  --container-max: 1240px;
+  /* Slightly wider */
+  --container-wide: 1440px;
+  --container-narrow: 760px;
+  --container-padding: clamp(1.5rem, 4vw, 3rem);
+
+  /* ── RADIUS ── */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2.5rem;
+  --radius-full: 9999px;
+
+  /* ── TRANSITIONS ── */
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  /* Slightly slower for elegance */
+  --duration-slow: 500ms;
+  --duration-slower: 800ms;
+
+  --transition-colors:
+    color var(--duration-normal) var(--ease-out),
+    background-color var(--duration-normal) var(--ease-out),
+    border-color var(--duration-normal) var(--ease-out),
+    box-shadow var(--duration-normal) var(--ease-out);
+
+  --transition-transform: transform var(--duration-normal) var(--ease-out);
+  --transition-all: all var(--duration-normal) var(--ease-out);
+
+  /* ── Z-INDEX ── */
+  --z-behind: -1;
+  --z-normal: 1;
+  --z-tooltip: 10;
+  --z-sticky: 100;
+  --z-overlay: 200;
+  --z-modal: 300;
+
+  /* ── NAV ── */
+  --nav-height: 5rem;
+  /* Taller nav */
+  --nav-bg: rgba(255, 255, 255, 0.75);
+  --nav-border: rgba(226, 232, 240, 0.6);
+}
+
+
+/* ══════════════════════════════════════
+   DARK THEME — Fully engineered
+   ══════════════════════════════════════ */
+[data-theme="dark"] {
+  /* Surfaces */
+  --bg-primary: #0c0e1a;
+  --bg-secondary: #141627;
+  --bg-tertiary: #1c1f36;
+  --bg-elevated: #1e2140;
+  --bg-glass: rgba(14, 16, 30, 0.78);
+
+  /* Text */
+  --text-primary: #e4e5f0;
+  --text-secondary: #a0a4c0;
+  --text-muted: #6b6f8a;
+
+  /* Borders */
+  --border: #2a2d48;
+  --border-strong: #3d4168;
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.35);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.4);
+  --shadow-glow: 0 0 40px hsla(var(--accent-h), 70%, 60%, 0.2);
+  --shadow-card-hover: 0 8px 32px rgba(0, 0, 0, 0.4);
+
+  /* Cards */
+  --card-bg: #181b30;
+  --card-border: #2a2d48;
+
+  /* Accent — Brighter for dark mode */
+  --accent: hsl(var(--accent-h), 85%, 68%);
+  --accent-hover: hsl(var(--accent-h), 85%, 75%);
+  --accent-soft: hsla(var(--accent-h), 60%, 60%, 0.12);
+  --accent-secondary: hsl(270, 75%, 72%);
+  --accent-tertiary: hsl(330, 75%, 68%);
+  --gradient-accent-text: var(--gradient-rainbow);
+
+  /* Nav */
+  --nav-bg: rgba(12, 14, 26, 0.88);
+  --nav-border: var(--border);
+}

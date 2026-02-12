@@ -1,0 +1,104 @@
+/* ============================================================
+   ANIMATIONS — Keyframes & Motion
+   ============================================================ */
+
+/* GRADIENT SHIMMER — Defined in sections.css (@keyframes rainbow-shift) */
+
+/* FADE IN UP — Smoother entrance */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+        filter: blur(4px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+/* FADE IN */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        filter: blur(5px);
+    }
+
+    to {
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+/* SLIDE IN FROM LEFT */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* SCALE UP — Soft bounce */
+@keyframes scaleUp {
+    0% {
+        opacity: 0;
+        transform: scale(0.92);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* PULSE GLOW — Subtle breathing */
+@keyframes pulseGlow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 hsla(var(--accent-h), 70%, 60%, 0.4);
+    }
+
+    50% {
+        box-shadow: 0 0 0 6px hsla(var(--accent-h), 70%, 60%, 0);
+    }
+}
+
+/* TYPEWRITER CURSOR BLINK */
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+/* BADGE SHINE — Smoother sweep */
+@keyframes shine {
+    0% {
+        left: -100%;
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        left: 200%;
+        opacity: 0;
+    }
+}
+
+/* Reduced motion handled globally in base.css */
