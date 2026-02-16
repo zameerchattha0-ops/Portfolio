@@ -102,17 +102,31 @@
     }
 
     .hero__title {
-        margin-inline: -1.25rem;
-        /* Pull text to edges to maximize size */
-        width: calc(100% + 2.5rem);
-        font-size: clamp(2.2rem, 9vw, 4rem);
-        /* Force larger size on mobile */
+        /* Break container to use full viewport width */
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        width: 100vw;
+        padding-inline: 0.25rem;
+        /* Minimal safety padding */
+
+        font-size: clamp(1.8rem, 8.2vw, 4rem);
+        /* ~29.5px on 360px screen. */
+        white-space: nowrap;
+        letter-spacing: -0.03em;
+        /* Reset to default (-0.03em) */
+        overflow: hidden;
+        text-overflow: ellipsis;
         line-height: 1.1;
     }
 
-    .hero__tagline {
-        font-size: var(--text-sm) !important;
-        /* Reduce tagline to restore hierarchy */
+    .hero__tagline,
+    .hero__subtitle,
+    .hero__content p {
+        font-size: 0.9rem !important;
+        /* ~14.4px. Creates ~1.8x contrast with Heading */
         line-height: 1.5;
         margin-top: var(--space-sm);
     }
@@ -129,8 +143,15 @@
     }
 
     .hero__stats {
-        flex-direction: column;
-        gap: var(--space-lg);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-md);
+        width: 100%;
+    }
+
+    .hero__stat:last-child {
+        grid-column: span 2;
+        /* Center the 3rd item */
     }
 
     .hero__actions {
