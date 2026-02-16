@@ -68,7 +68,7 @@
                         clearInterval(typeInterval);
                     }
                 }, 40);
-            }, 1200); // Start after title reveals
+            }, 600); // Start after title reveals
         }
 
         // 3. Animated Progress Bar (eased — slow start, accelerating)
@@ -77,7 +77,7 @@
         if (progressFill && progressPct) {
             var progress = 0;
             var progressStart = Date.now();
-            var totalDuration = 3200; // 3.2 seconds to fill
+            var totalDuration = 2500; // 2.5 seconds to fill
 
             function updateProgress() {
                 var elapsed = Date.now() - progressStart;
@@ -92,7 +92,7 @@
             }
             setTimeout(function () {
                 requestAnimationFrame(updateProgress);
-            }, 1500);
+            }, 800);
         }
 
         // 2. Diverse Particles (7 Shapes, Rainbow Colors)
@@ -244,12 +244,12 @@
                 triggerHeroEntrance();
             }, 800);
 
-        }, 5000);
+        }, 3800);
 
         // Cleanup DOM
         setTimeout(function () {
             loader.style.display = 'none';
-        }, 6000);
+        }, 4800);
     }
 
     // ═══════════════════════════════════════════
