@@ -105,6 +105,16 @@
         margin-inline: -1.25rem;
         /* Pull text to edges to maximize size */
         width: calc(100% + 2.5rem);
+        font-size: clamp(2.2rem, 9vw, 4rem);
+        /* Force larger size on mobile */
+        line-height: 1.1;
+    }
+
+    .hero__tagline {
+        font-size: var(--text-sm) !important;
+        /* Reduce tagline to restore hierarchy */
+        line-height: 1.5;
+        margin-top: var(--space-sm);
     }
 
     .hero__label {
